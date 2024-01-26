@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS ImD CFN Template
+Parameters:
+  ProjectName:
+    Description: Name of the ProjectName
+    Type: String
+    Default: awsjams
+  Author:
+    Description: Author (should be meta data)
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v2
+# Username:
+#    Description:  Username for Tenable Cloud Security
+#    Type: String
+#    Default: awsjamsuser23-000@tenable.training
+#  Password:
+#    Description: Password for Tenable Cloud Securitiy
+#    Type:  String
+#    Default: B3WDauavpmw!qy8
+Resources:
+  NullResource:
+    Type: AWS::CloudFormation::WaitConditionHandle
+#Outputs:
+#  TenableUsername:
+#    Value:  !Ref Username
+#  TenablePassword:
+#    Value:  !Ref Password
