@@ -1,10 +1,14 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: AWS ImD CFN Template
+Description: CNAPP Demo Template
 Parameters:
   ProjectName:
-    Description: Name of the ProjectName
+    Description: Project Name (like workshop, immersionday, awsjams)
     Type: String
-    Default: awsImD
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
   Author:
     Description: Author (should be meta data)
     Type: String
@@ -12,23 +16,7 @@ Parameters:
   Version:
     Description: Version
     Type: String
-    Default: v2
-  StoreAPI:
-    Description:  Cloud Formation Template for Storing APIkey
-    Type:  String
-    Default:  https://aws-jam-challenge-resources.s3.amazonaws.com/breaking-bad-code/storeAPI.yaml
-  IAMRoles:
-    Description: Cloud Formation Template for Creating Tenable Roles
-    Type: String
-    Default: https://aws-jam-challenge-resources.s3.amazonaws.com/breaking-bad-code/aa_role.yaml
-  GuacUsername:
-    Description: Username for Bastion Host
-    Type: String
-    Default: GuacAdmin
-  GuacPassword:
-    Description:  Password for Bastion Host
-    Type: String
-    Default: Tenable.12345
+    Default: v1
   WinDTUsername:
     Description:  Username for Windows Desktop
     Type: String
@@ -38,68 +26,157 @@ Parameters:
     Type:  String
     Default: Tenable.One
 Resources:
-#  CdkJamRepo:
-#    Type: AWS::CodeCommit::Repository
-#    Properties:
-#      RepositoryName: CDKRepo
-#      Code:
-#        BranchName: main
-#        S3:
-#          Bucket: !Sub aws-jam-challenge-resources-${AWS::Region}
-#          Key: breaking-bad-code/tenable.zip
-#  C9JamEnvironment:
-#    Type: AWS::Cloud9::EnvironmentEC2
-#    Properties:
-#      InstanceType: m5.large
-#      Description: Cloud9 environment used to complete this Jam challenge
-#      ImageId: amazonlinux-2-x86_64
-#      OwnerArn: !Sub arn:aws:sts::${AWS::AccountId}:assumed-role/${LabUserRoleName}/team-console
-#      Repositories:
-#        - PathComponent: "/jam-folder"
-#      RepositoryUrl:
-#          Fn::GetAtt:
-#          - CdkJamRepo
-#          - CloneUrlHttp
-#      SubnetId:
-#        Ref: AwsJamPublicSubnet
-#  GuacamoleInstance:
-#    Type: 'AWS::EC2::Instance'
-#    Properties:
-#      InstanceType: t2.medium
-#      ImageId: ami-0d5584018b6702c17
-#      ImageId:  !FindInMap 
-#        - RegionMap
-#        - !Ref 'AWS::Region'
-#        - GUACAMI
-#      NetworkInterfaces:
-#        - AssociatePublicIpAddress: "true"
-#          DeviceIndex: "0"
-#          GroupSet:
-#            - Ref: AwsPublicSecurityGroup
-#          SubnetId: 
-#            Ref: AwsJamPublicSubnet
-#          DeleteOnTermination: "true"
-#      Tags:
-#        - Key: Name
-#          Value: "GuacamoleJumpBox"
-#        - Key: purpose
-#          Value: awsjams
-#        - Key: Version
-#          Value: !Sub Version
-#        - Key: author
-#          Value: !Sub Author
-#    Metadata:
-#      'AWS::CloudFormation::Designer':
-#        id: 24d3c4d8-47ef-4574-9162-b11bdb3073f3
- # GuacamoleNetIF01:
- #   Type: AWS::EC2::NetworkInterface
- #   Properties:
- #     Description: Network Interface for Guacamole
- #     DeviceIndex: "0"
- #     SubnetId: !Ref AwsJamPublicSubnet
-  AwsPublicSecurityGroup:
+#############
+#  IAM User #
+#############
+
+  OverPrivilegedUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName:  !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "overpriviledged-user"]]
+      Tags:
+        - Key: Environment
+          Value: !Sub "${ProjectName}-${Environment}"
+        - Key: Type
+          Value: "overprivilged-user"
+  AccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref OverPrivilegedUser
+  UserPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: OverprivilegedPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - "ec2:*"
+              - "s3:*"
+              - "lambda:*"
+              - "cloudwatch:*"
+            Resource: "*"
+      Users:
+        - !Ref OverPrivilegedUser
+
+  NewPrivilegedUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName:  !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "-new-privileged-user"]]
+      Tags:
+        - Key: Environment
+          Value: !Sub "${ProjectName}-${Environment}"
+        - Key: Type
+          Value: "new-privileged-user"
+      ManagedPolicyArns:
+      - 'arn:aws:iam::aws:policy/AdministratorAccess'
+  AccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref  NewPrivilegedUser
+    
+
+#############
+# IAM Roles #
+#############
+  OHcnappDemoEC2Role:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Overprivileged Role"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              Service: "ec2.amazonaws.com"
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoEC2Role"]]
+
+  OHcnappDemoEC2PrivilegedEscalation:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Privileged Escalations"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              Service: "ec2.amazonaws.com"
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoPrivilegedEscRole"]]
+      Policies:
+        - PolicyName: "CNAPP_ec2_inline_passrole"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect:  "Allow"
+                Action: "iam:PassRole"
+                Resource: "arn:aws:iam:::role/lambda_role"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+  OHcnappDemoLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Lambda Role"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoLambaRole"]]
+  OHcnappDemoAdminRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Admin Role"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              AWS: !Join
+                - ''
+                - - 'arn:aws:iam::' 
+                  - !Ref AWS::AccountId
+                  - ':root'
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoAdminRole"]]
+  OHcnappCodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "CodeBuild Role"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              Service: "codebuild.amazonaws.com"
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoCodeBuildRole"]]
+  OHcnappDemoPublicSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+      GroupName: "OHcnappDemoPublicSG"
       GroupDescription: Enable SSH to my EC2Instance and port 8080 to 
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -119,13 +196,14 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.0.0.0/8
-      VpcId: !Ref AWSJamVPC
+      VpcId: !Ref OHcnappDemoVPC
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 378900f8-dfab-4a33-9496-c1ef74c8516b
-  AwsWindowsSecurityGroup:
+  OHcnappWinDemoSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+      GroupName: "OHcnappWinDemoSG"
       GroupDescription: RDP access to windows server
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -145,10 +223,11 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 0.0.0.0/0
-      VpcId: !Ref AWSJamVPC
-  AwsInternalSecurityGroup:
+      VpcId: !Ref OHcnappDemoVPC
+  OHcnappDemoPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+      GroupName: "OHcnappDemoPrivateSG"
       GroupDescription: comm between internal networks
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -172,11 +251,11 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.1.0.0/16
-      VpcId: !Ref AWSJamVPC
+      VpcId: !Ref OHcnappDemoVPC
       Tags:
         - Key: Name
-          Value: "drift_demo"
-  AWSJamVPC:
+          Value: !Ref 
+  OHcnappDemoVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
       CidrBlock: 10.1.0.0/16
@@ -185,81 +264,59 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: fddde793-4fce-4f6f-939d-0d8781d3ba3d
-  AWSJamInternalSubnet:
+  OHcnappDemoPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      VpcId: !Ref AWSJamVPC
+      VpcId: !Ref OHcnappDemoVPC
       CidrBlock: 10.1.2.0/24
       AvailabilityZone: !Select 
         - '0'
         - !GetAZs ''
-      Tags:
-        - Key: Name
-          Value: "drift_demo"
     Metadata:
       'AWS::CloudFormation::Designer':
         id: d1663f3a-2a13-4f2e-bf43-8adbf683a5cc
-  AwsJamIGW:
+  OHcnappDemoIGW:
     Type: 'AWS::EC2::InternetGateway'
     Properties: {}
     Metadata:
       'AWS::CloudFormation::Designer':
         id: b9b95cb8-e623-40d8-9c19-b6c361c76e79
-  AwsJamRouteTable:
+  OHcnappDemoRouteTable:
     Type: 'AWS::EC2::RouteTable'
     Properties:
-      VpcId: !Ref AWSJamVPC
+      VpcId: !Ref OHcnappDemoVPC
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-  AwsJamPublicRoute:
+  OHcnappDemoPublicRoute:
     Type: 'AWS::EC2::Route'
     Properties:
-      RouteTableId: !Ref AwsJamRouteTable
+      RouteTableId: !Ref OHcnappDemoRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: 
-        Ref: AwsJamIGW
+        Ref: OHcnappDemoIGW
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 0073d26b-d5df-4cf1-81cd-f8dad8f8ece7
     DependsOn:
-      - AwsJamIGW
-  EC2VPCG3CQWV:
+      - OHcnappDemoIGW
+  OHcnappDemoVPCGateway:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
-      VpcId: !Ref AWSJamVPC
-      InternetGatewayId: !Ref AwsJamIGW
-  AwsJamPublicSubnet:
+      VpcId: !Ref OHcnappDemoVPC
+      InternetGatewayId: !Ref OHcnappDemoIGW
+  OHcnappDemoPublicSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      VpcId: !Ref AWSJamVPC
+      VpcId: !Ref OHcnappDemoVPC
       CidrBlock: 10.1.1.0/24
     Metadata:
       'AWS::CloudFormation::Designer':
         id: ed11ad6b-d0c4-4304-bcba-34b112fbb9bd
-##########
-#  Drift Demo Section
-###########        
-  AWSJamDriftVPC:
-    Type: 'AWS::EC2::VPC'
-    Properties:
-      CidrBlock:  172.16.0.0/16
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-  AWSJamDriftSubnet:
-    Type:  'AWS::EC2::Subnet'
-    Properties:
-      VpcId: !Ref AWSJamDriftVPC
-      CidrBlock:  172.16.1.0/24
-      AvailabilityZone: !Select 
-        - '0'
-        - !GetAZs ''
-      Tags:
-        - Key:  Name
-          Value:  "drift_demo"
-  AwsDriftDemoSecurityGroup:
+  OHcnappDemoPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
+      GroupName: "OHcnappDemoPrivateSG"
       GroupDescription: comm between internal networks
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -283,65 +340,46 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.1.0.0/16
-      VpcId: !Ref AWSJamDriftVPC
+      VpcId: !Ref OHcnappDemoVPC
       Tags:
         - Key: Name
-          Value: "drift_demo"
-########
-##  End Drift Section
-########        
-  EC2TestCase:
+          Value: "OHcnappDemoPrivateSG"
+  OHcnappDemoEC2InstanceProfile:
+    Type:  AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref OHcnappDemoEC2Role
+  
+  ###################
+  ##  EC2 in VPC  ###
+  ###################
+
+  OHcnappDemoPublicEC201:
     Type: 'AWS::EC2::Instance'
     Properties:
       InstanceType: t2.micro
 #      ImageId: ami-0d803519bc74364e7
+#      ImageId: !Ref LatesetAmiId
       ImageId:  !FindInMap 
         - RegionMap
         - !Ref 'AWS::Region'
         - AAAMI
+      IamInstanceProfile: !Ref OHcnappDemoEC2InstanceProfile
       NetworkInterfaces:
          - AssociatePublicIpAddress: "true"
            PrivateIpAddress: '10.1.1.10'
            DeviceIndex: "0"
            GroupSet:
-             - Ref: AwsPublicSecurityGroup
+             - Ref: OHcnappDemoPublicSG
            SubnetId: 
-            Ref: AwsJamPublicSubnet
+            Ref: OHcnappDemoPublicSubnet
            DeleteOnTermination: "true"
       Tags:
-        - Key: Name
-          Value: "AA_EC2_Demo"
+      - Key: Name
+        Value: "OHcnappDemoPublicEC201"
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 793ef48f-2c1f-48a6-8877-3a44983adfff
-#  OnPremScannerEC2:
-#    Type: 'AWS::EC2::Instance'
-#    Properties:
-#      InstanceType: t2.micro
-#      ImageId: ami-00a10a9bcbd7e64df
-#      NetworkInterfaces:
-#         - AssociatePublicIpAddress: "true"
-#           PrivateIpAddress: '10.1.1.122'
-#           DeviceIndex: "0"
-#           GroupSet:
-#             - Ref: AwsInternalSecurityGroup
-#           SubnetId: 
-#            Ref: AwsJamPublicSubnet
-#           DeleteOnTermination: "true"
-#  GitlabsEC2:
-#    Type: 'AWS::EC2::Instance'
-#    Properties:
-#      InstanceType: t2.micro
-#      ImageId: ami-048820b505dcfc79d
-#      NetworkInterfaces:
-#         - AssociatePublicIpAddress: "true"
-#           PrivateIpAddress: '10.1.1.140'
-#           DeviceIndex: "0"
-#           GroupSet:
-#             - Ref: AwsInternalSecurityGroup
-#           SubnetId: 
-#            Ref: AwsJamPublicSubnet
-#           DeleteOnTermination: "true"
 #  Windows10EC2:
 #    Type: 'AWS::EC2::Instance'
 #    Properties:
@@ -356,9 +394,9 @@ Resources:
 #           PrivateIpAddress: '10.1.1.6'
 #           DeviceIndex: "0"
 #           GroupSet:
-#             - Ref: AwsWindowsSecurityGroup
+#             - Ref: OHcnappWinDemoSG
 #           SubnetId: 
-#            Ref: AwsJamPublicSubnet
+#            Ref: OHcnappDemoPublicSubnet
 #           DeleteOnTermination: "true"
 #      Tags:
 #        - Key: Name
@@ -366,8 +404,8 @@ Resources:
   AwsRouteTabAssoc:
     Type:  AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      RouteTableId: !Ref AwsJamRouteTable
-      SubnetId: !Ref AwsJamPublicSubnet
+      RouteTableId: !Ref OHcnappDemoRouteTable
+      SubnetId: !Ref OHcnappDemoPublicSubnet
 #  GitlabsS3Policy:
 #    Type:  AWS::IAM::Policy
 #    Properties:
@@ -394,193 +432,9 @@ Resources:
 #    Properties:
 #      AWSServiceName: "ec2.amazonaws.com"        
 Outputs:
-  IAMRoles: 
-    Description:  Location of CFN for Creating roles
-    Value:  !Ref IAMRoles
-  AAEC2Id:
-    Description:  Instance Id for AA-EC2-Demo
-    Value:  !Ref EC2TestCase
   ExternalId:
     Value:  !Select [2, !Split [ '/', !Ref  AWS::StackId]]
-  StoreAPI:
-    Value:  !Ref StoreAPI
-  IAMRoles: 
-    Description:  Location of CFN for Creating roles
-    Value:  !Ref IAMRoles
-  AAEC2Id:
-    Description:  Instance Id for AA-EC2-Demo
-    Value:  !Ref EC2TestCase
-  AwsInternalSecurityGroup:
-    Description:  Security Group for Lab02 Demo
-    Value:  !Ref AwsInternalSecurityGroup
-#  GuacamoleInstanceId:
-#    Description: InstanceId of Guacamole
-#    Value: !Ref GuacamoleInstance
-#  GuacamolePublicDNS:
-#    Description: Public DNS Name
-#    Value: !GetAtt 
-#      - GuacamoleInstance
-#      - PublicDnsName
-#  GuacamolePublicIP:
-#    Description: Public IP Address
-#    Value: !GetAtt 
-#      - GuacamoleInstance
-#      - PublicIp
-#  OnPremScannerId:
-#    Description: InstanceId of OnPremScanner
-#    Value: !Ref OnPremScannerEC2
-#  OnPremScannerIp:
-#    Description: Private IP Address
-#    Value: !GetAtt 
-#      - OnPremScannerEC2
-#      - PrivateIp
-#  GitlabsId:
-#    Description: InstanceId of GitLabs
-#    Value: !Ref GitlabsEC2
-#  GitlabsIp:
-#    Description: Private IP Address
-#    Value: !GetAtt 
-#      - GitlabsEC2
-#      - PrivateIp
-##  Windows10Id:
-##    Description: Instance Id of Windows 10
-##    Value:  !Ref Windows10EC2
-##  Windows10Ip:
-##    Description:  Private IP Id of Windows 10
-##    Value:  !GetAtt
-##      - Windows10EC2
-#      - PrivateIp
-##  Windows10PubIp:
-##    Description:  Public IP of Windows 10 for RDP access
-##    Value:  !GetAtt 
-##      - Windows10EC2
-##      - PublicIp
-#  DriftSecurityGroup:
-#    Description:  Security Group for Drift Demo
-#    Value:  !Ref AwsDriftDemoSecurityGroup
-#  DriftSecurityGroupId:
-#    Description:  SecurityGroup Id for Drift Demo
-#    Value:  !GetAtt
-#      - AwsDriftDemoSecurityGroup
-#      - VpcId
 
-Metadata:
-  'AWS::CloudFormation::Designer':
-    fddde793-4fce-4f6f-939d-0d8781d3ba3d:
-      size:
-        width: 290
-        height: 220
-      position:
-        x: 180
-        'y': 110
-      z: 1
-      embeds:
-        - 793ef48f-2c1f-48a6-8877-3a44983adfff
-        - 378900f8-dfab-4a33-9496-c1ef74c8516b
-        - 24d3c4d8-47ef-4574-9162-b11bdb3073f3
-    d1663f3a-2a13-4f2e-bf43-8adbf683a5cc:
-      size:
-        width: 150
-        height: 150
-      position:
-        x: -20
-        'y': -60
-      z: 1
-      embeds: []
-    378900f8-dfab-4a33-9496-c1ef74c8516b:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 220
-        'y': 140
-      z: 2
-      parent: fddde793-4fce-4f6f-939d-0d8781d3ba3d
-      embeds: []
-      iscontainedinside:
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-        - fddde793-4fce-4f6f-939d-0d8781d3ba3d
-    24d3c4d8-47ef-4574-9162-b11bdb3073f3:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 370
-        'y': 140
-      z: 2
-      parent: fddde793-4fce-4f6f-939d-0d8781d3ba3d
-      embeds: []
-    b9b95cb8-e623-40d8-9c19-b6c361c76e79:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: -120
-        'y': 150
-      z: 0
-      embeds: []
-    098c11b6-3f03-4c58-bd8a-be133ef73fe9:
-      size:
-        width: 140
-        height: 140
-      position:
-        x: -30
-        'y': 260
-      z: 0
-      embeds:
-        - 0073d26b-d5df-4cf1-81cd-f8dad8f8ece7
-    0073d26b-d5df-4cf1-81cd-f8dad8f8ece7:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 10
-        'y': 300
-      z: 1
-      parent: 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-      embeds: []
-      iscontainedinside:
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-        - 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-      dependson:
-        - b9b95cb8-e623-40d8-9c19-b6c361c76e79
-    ed11ad6b-d0c4-4304-bcba-34b112fbb9bd:
-      size:
-        width: 140
-        height: 140
-      position:
-        x: 500
-        'y': 20
-      z: 0
-      embeds: []
-    793ef48f-2c1f-48a6-8877-3a44983adfff:
-      size:
-        width: 60
-        height: 60
-      position:
-        x: 230
-        'y': 240
-      z: 2
-      parent: fddde793-4fce-4f6f-939d-0d8781d3ba3d
-      embeds: []
 Mappings:
   RegionMap:
 #    us-east-1:
@@ -595,7 +449,8 @@ Mappings:
 #      GUACAMI: ami-0bf18ec307863dcc5
 #      W10AMI: ami-002a07f4f7c694d11
       AAAMI: ami-06448b8505d6cf29c
-#    us-west-1:
+    us-west-1:
 #      GUACAMI: ami-034bffbf234a264e9
 #      W10AMI: ami-00a9d9ce4c6db5313
-#      AAAMI: ami-0dcc5cbe25120ea37
+#
+      AAAMI: ami-05a0e4e5aafb17026
