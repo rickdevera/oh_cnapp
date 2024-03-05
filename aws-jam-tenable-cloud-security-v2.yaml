@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: CNAPP Demo Template
+Description: Oh CNAPP Demo Template
 Parameters:
   ProjectName:
     Description: Project Name (like workshop, immersionday, awsjams)
@@ -30,7 +30,7 @@ Resources:
 #  IAM User #
 #############
 
-  OverPrivilegedUser:
+  OHcnappOverPrivilegedUser:
     Type: AWS::IAM::User
     Properties:
       UserName:  !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "overpriviledged-user"]]
@@ -58,9 +58,9 @@ Resources:
               - "cloudwatch:*"
             Resource: "*"
       Users:
-        - !Ref OverPrivilegedUser
+        - !Ref OHcnappOverPrivilegedUser
 
-  NewPrivilegedUser:
+  OHcnappNewPrivilegedUser:
     Type: AWS::IAM::User
     Properties:
       UserName:  !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "-new-privileged-user"]]
@@ -74,13 +74,29 @@ Resources:
   AccessKey:
     Type: AWS::IAM::AccessKey
     Properties:
-      UserName: !Ref  NewPrivilegedUser
-    
+      UserName: !Ref  OHcnappNewPrivilegedUser
 
+  OHcnappOverPrivilegedVersionUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName:  !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "-over-privileged-version-user"]]
+      Tags:
+        - Key: Environment
+          Value: !Sub "${ProjectName}-${Environment}"
+        - Key: Type
+          Value: "over-privileged-version-user"
+      ManagedPolicyArns:
+      - 'arn:aws:iam::aws:policy/AdministratorAccess'
+  AccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref  OHcnappOverPrivilegedVersionUser
+
+      
 #############
 # IAM Roles #
 #############
-  OHcnappDemoEC2Role:
+  OHcnappOverPrivEC2Role:
     Type: AWS::IAM::Role
     Properties:
       Description: "Overprivileged Role"
@@ -95,9 +111,9 @@ Resources:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
       Tags:
         - Key: Name
-          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoEC2Role"]]
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappOverPrivEC2Role"]]
 
-  OHcnappDemoEC2PrivilegedEscalation:
+  OHcnappEC2PrivilegedEscalation:
     Type: AWS::IAM::Role
     Properties:
       Description: "Privileged Escalations"
@@ -112,7 +128,7 @@ Resources:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
       Tags:
         - Key: Name
-          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoPrivilegedEscRole"]]
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappPrivilegedEscRole"]]
       Policies:
         - PolicyName: "CNAPP_ec2_inline_passrole"
           PolicyDocument:
@@ -123,7 +139,7 @@ Resources:
                 Resource: "arn:aws:iam:::role/lambda_role"
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
-  OHcnappDemoLambdaRole:
+  OHcnappLambdaRole:
     Type: AWS::IAM::Role
     Properties:
       Description: "Lambda Role"
@@ -136,8 +152,9 @@ Resources:
             Action: "sts:AssumeRole"
       Tags:
         - Key: Name
-          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoLambaRole"]]
-  OHcnappDemoAdminRole:
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappLambaRole"]]
+
+  OHcnappAdminRole:
     Type: AWS::IAM::Role
     Properties:
       Description: "Admin Role"
@@ -156,7 +173,8 @@ Resources:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
       Tags:
         - Key: Name
-          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoAdminRole"]]
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappAdminRole"]]
+          
   OHcnappCodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -172,11 +190,11 @@ Resources:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
       Tags:
         - Key: Name
-          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OhcnappDemoCodeBuildRole"]]
-  OHcnappDemoPublicSG:
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappCodeBuildRole"]]
+  OHcnappPublicSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: "OHcnappDemoPublicSG"
+      GroupName: "OHcnappPublicSG"
       GroupDescription: Enable SSH to my EC2Instance and port 8080 to 
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -196,7 +214,7 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.0.0.0/8
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 378900f8-dfab-4a33-9496-c1ef74c8516b
@@ -223,11 +241,11 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 0.0.0.0/0
-      VpcId: !Ref OHcnappDemoVPC
-  OHcnappDemoPrivateSG:
+      VpcId: !Ref OHcnappVPC
+  OHcnappPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: "OHcnappDemoPrivateSG"
+      GroupName: "OHcnappPrivateSG"
       GroupDescription: comm between internal networks
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -251,23 +269,26 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.1.0.0/16
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
           Value: !Ref 
-  OHcnappDemoVPC:
+  OHcnappVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
       CidrBlock: 10.1.0.0/16
       EnableDnsSupport: true
       EnableDnsHostnames: true
+      Tags:
+        - Key:  Name 
+          Value: !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "-VPC" ]]
     Metadata:
       'AWS::CloudFormation::Designer':
         id: fddde793-4fce-4f6f-939d-0d8781d3ba3d
-  OHcnappDemoPrivateSubnet:
+  OHcnappPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
       CidrBlock: 10.1.2.0/24
       AvailabilityZone: !Select 
         - '0'
@@ -275,48 +296,48 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: d1663f3a-2a13-4f2e-bf43-8adbf683a5cc
-  OHcnappDemoIGW:
+  OHcnappIGW:
     Type: 'AWS::EC2::InternetGateway'
     Properties: {}
     Metadata:
       'AWS::CloudFormation::Designer':
         id: b9b95cb8-e623-40d8-9c19-b6c361c76e79
-  OHcnappDemoRouteTable:
+  OHcnappRouteTable:
     Type: 'AWS::EC2::RouteTable'
     Properties:
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 098c11b6-3f03-4c58-bd8a-be133ef73fe9
-  OHcnappDemoPublicRoute:
+  OHcnappPublicRoute:
     Type: 'AWS::EC2::Route'
     Properties:
-      RouteTableId: !Ref OHcnappDemoRouteTable
+      RouteTableId: !Ref OHcnappRouteTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: 
-        Ref: OHcnappDemoIGW
+        Ref: OHcnappIGW
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 0073d26b-d5df-4cf1-81cd-f8dad8f8ece7
     DependsOn:
-      - OHcnappDemoIGW
-  OHcnappDemoVPCGateway:
+      - OHcnappIGW
+  OHcnappVPCGateway:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
-      VpcId: !Ref OHcnappDemoVPC
-      InternetGatewayId: !Ref OHcnappDemoIGW
-  OHcnappDemoPublicSubnet:
+      VpcId: !Ref OHcnappVPC
+      InternetGatewayId: !Ref OHcnappIGW
+  OHcnappPublicSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
       CidrBlock: 10.1.1.0/24
     Metadata:
       'AWS::CloudFormation::Designer':
         id: ed11ad6b-d0c4-4304-bcba-34b112fbb9bd
-  OHcnappDemoPrivateSG:
+  OHcnappPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: "OHcnappDemoPrivateSG"
+      GroupName: "OHcnappPrivateSG"
       GroupDescription: comm between internal networks
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -340,21 +361,22 @@ Resources:
           FromPort: 0
           ToPort: 0
           CidrIp: 10.1.0.0/16
-      VpcId: !Ref OHcnappDemoVPC
+      VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
-          Value: "OHcnappDemoPrivateSG"
-  OHcnappDemoEC2InstanceProfile:
+          Value: "OHcnappPrivateSG"
+  
+  OHcnappEC2InstanceProfile:
     Type:  AWS::IAM::InstanceProfile
     Properties:
       Roles:
-        - !Ref OHcnappDemoEC2Role
+        - !Ref OHcnappOverPrivEC2Role
   
   ###################
   ##  EC2 in VPC  ###
   ###################
 
-  OHcnappDemoPublicEC201:
+  OHcnappPublicEC2:
     Type: 'AWS::EC2::Instance'
     Properties:
       InstanceType: t2.micro
@@ -364,19 +386,19 @@ Resources:
         - RegionMap
         - !Ref 'AWS::Region'
         - AAAMI
-      IamInstanceProfile: !Ref OHcnappDemoEC2InstanceProfile
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
       NetworkInterfaces:
          - AssociatePublicIpAddress: "true"
            PrivateIpAddress: '10.1.1.10'
            DeviceIndex: "0"
            GroupSet:
-             - Ref: OHcnappDemoPublicSG
+             - Ref: OHcnappPublicSG
            SubnetId: 
-            Ref: OHcnappDemoPublicSubnet
+            Ref: OHcnappPublicSubnet
            DeleteOnTermination: "true"
       Tags:
       - Key: Name
-        Value: "OHcnappDemoPublicEC201"
+        Value: "OHcnappPublicEC2"
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 793ef48f-2c1f-48a6-8877-3a44983adfff
@@ -396,7 +418,7 @@ Resources:
 #           GroupSet:
 #             - Ref: OHcnappWinDemoSG
 #           SubnetId: 
-#            Ref: OHcnappDemoPublicSubnet
+#            Ref: OHcnappPublicSubnet
 #           DeleteOnTermination: "true"
 #      Tags:
 #        - Key: Name
@@ -404,8 +426,8 @@ Resources:
   AwsRouteTabAssoc:
     Type:  AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      RouteTableId: !Ref OHcnappDemoRouteTable
-      SubnetId: !Ref OHcnappDemoPublicSubnet
+      RouteTableId: !Ref OHcnappRouteTable
+      SubnetId: !Ref OHcnappPublicSubnet
 #  GitlabsS3Policy:
 #    Type:  AWS::IAM::Policy
 #    Properties:
