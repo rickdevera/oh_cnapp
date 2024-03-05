@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  ProjectName:
+    Description: Project Name (like workshop, immersionday, awsjams)
+    Type: String
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
+  Author:
+    Description: Author (should be meta data)
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v1
+
+Resources:
+  OHcnappDemoxVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: 10.2.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key:  Name 
+          Value: !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "OHcnappDemoxVPC" ]]
+        - Key: git_commit
