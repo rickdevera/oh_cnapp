@@ -1,0 +1,78 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "ec2:CreateSnapshot",
+        "Resource": "arn:aws:ec2:*:*:volume/*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": "kms:CreateAlias",
+        "Resource": "arn:aws:kms:*:*:alias/*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:CopySnapshot",
+          "ec2:CreateSnapshot",
+          "ec2:CreateTags",
+          "kms:CreateKey",
+          "kms:TagResource"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:RequestTag/ErmeticContext": "WorkloadAnalysis"
+          }
+        }
+      },
+      {
+        "Effect": "Deny",
+        "Action": "kms:TagResource",
+        "Resource": "*",
+        "Condition": {
+          "Null": {
+            "aws:ResourceTag/ErmeticContext": "true"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:CopySnapshot",
+          "ec2:DeleteSnapshot",
+          "ec2:ModifySnapshotAttribute",
+          "kms:CreateAlias",
+          "kms:CreateGrant",
+          "kms:Decrypt",
+          "kms:EnableKeyRotation",
+          "kms:GenerateDataKeyWithoutPlaintext",
+          "kms:ReEncryptFrom",
+          "kms:ReEncryptTo",
+          "kms:RevokeGrant",
+          "kms:ScheduleKeyDeletion"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:ResourceTag/ErmeticContext": "WorkloadAnalysis"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "kms:CreateGrant",
+          "kms:Decrypt",
+          "kms:ReEncryptFrom"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringLike": {
+            "kms:ViaService": "ec2.*.amazonaws.com"
+          }
+        }
+      }
+    ]
+  }
