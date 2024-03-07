@@ -1,65 +1,78 @@
-﻿# Tenable Cloud Security Lesson Plan
-## Ambassador Training 
+﻿# Lesson Plan: Ermetic CNAPP Solutions Overview
 
-### Audience
-- Level 101 - Beginners with basic knowledge of cloud computing and security concepts.
-- Level 201 - Intermediate studnets with some experience in cloud-native technologies and cloud security principles.
+## Course Overview
 
-#### Goals/Objectives
-- Understand what CNAPP is and its importance in cloud-native ecosystems.
-- Learn about the key components and functionalities of CNAPP solutions.
-- Gain hands-on experience with Tenable Cloud Security to  protect cloud-native applications.
-- Understand how to integrate CNAPP into existing DevOps workflows.
+This course is designed to provide a comprehensive understanding of Ermetic's Cloud Native Application Protection Platform (CNAPP) solutions, including Cloud Workload Protection Platform (CWPP), Cloud Security Posture Management (CSPM), Cloud Infrastructure Entitlement Management (CIEM), and Just-In-Time (JIT) access. It's aimed at cloud security professionals, IT administrators, and cloud architects who are tasked with securing cloud environments.
 
-#### Prerequisites
+### Target Audience
+
+- Level 101 and Level 202
+- Cloud Security Professionals
+- IT Administrators
+- Cloud Architects
+
+### Duration
+
+- **Total Duration**: 8 hours
+- **Format**: Combination of lectures, hands-on activities, group discussions, and Q&A sessions
+
+### Objectives
+
+By the end of this course, participants will:
+
+1. Understand the key components of Ermetic's CNAPP solutions.
+2. Be able to configure and utilize CWPP, CSPM, CIEM, and JIT features within Ermetic.
+3. Identify and mitigate cloud security risks effectively.
+4. Implement best practices for cloud security and compliance.
+
+### Prerequisites
+
 - Basic understanding of cloud computing platforms (AWS, Azure, GCP).
-- Familiarity with the concept of DevOps and CI/CD pipelines.
-- Knowledge of basic cybersecurity principles.
-________
+- Familiarity with cloud security concepts and principles.
 
+### Materials Needed
 
-### Session 1: Introduction and Theoretical Concepts
-#### Module 1: Introduction to CNAPP
-- What is CNAPP?
-- The importance of CNAPP in modern cloud-native applications.
-- Overview of Tenable Dashboard components (e.g., workload protection, container security, network security, posture management).
-CNAPP Components and Functionalities
-- Onboard AWS Account
-- Quick Dashboard Navigation
+- Access to Ermetic platform (demo or live environment).
+- AWS Account
+- Course slides and documentation.
+- Hands-on lab guides.
 
-#### Module 2: Deep dive into CNAPP components:
-   - Cloud Security Posture Management (CSPM)
-   - Cloud Workload Protection Platforms (CWPP)
-   - Cloud Infrastructure Entitlement Management (CIEM)
-   - Container Security
-   - - Discussion on the role of each component in securing cloud-native applications.
+## Lesson Plan Details
 
-#### Module 3: CNAPP Architectures and Deployment Models
-- Overview of CNAPP architectures.
-- Deployment models and considerations.
-- Integration with existing cloud and DevOps tools.
+### Module 1: Introduction to Ermetic CNAPP (1 Hour)
 
+- **Lecture**: Overview of CNAPP and its importance in cloud security.
+- **Discussion**: The evolving landscape of cloud security threats.
 
-### Session2: Practical Application and Advanced Topics
+### Module 2: Cloud Workload Protection Platform (CWPP) (1.5 Hours)
 
-#### Module 4: Hands-on Workshop with a CNAPP Tool
-- Setting up a CNAPP tool in a cloud environment (participants will follow along with a guided setup on a popular CNAPP platform).
-- Configuring CNAPP components to secure a simple cloud-native application.
-- Simulating attacks and monitoring CNAPP responses.
+- **Lecture**: Deep dive into CWPP features and capabilities.
+- **Hands-on Activity**: Configuring CWPP for workload protection in Ermetic.
+- **Discussion**: Best practices for workload security in cloud environments.
 
-#### Module 5: Integrating CNAPP into DevOps Workflows
-- Best practices for integrating CNAPP solutions with CI/CD pipelines.
-- Automating security policies and compliance checks.
-- Case studies on successful CNAPP integrations.
+### Module 3: Cloud Security Posture Management (CSPM) (1.5 Hours)
 
-#### Module 6: Just In Time (JIT) Access
-- What is JIT access
-- JIT Personas and Workflow
-- Granting JIT Permissions
-- Administor JIT Access
-- Request Access
-- Review Access
-#### Module 7: Wrap-Up and Feedback
-- Summary of key takeaways from the day.
-- Collecting feedback on the session for improvement.
-- Resources for further learning and next steps for implementing CNAPP strategies.
+- **Lecture**: Understanding CSPM and its role in maintaining cloud security hygiene.
+- **Hands-on Activity**: Using CSPM to identify and remediate misconfigurations in Ermetic.
+- **Group Discussion**: Strategies for continuous compliance and risk management.
+
+### Module 4: Cloud Infrastructure Entitlement Management (CIEM) (2 Hours)
+
+- **Lecture**: Introduction to CIEM and managing cloud access risks.
+- **Hands-on Activity**: Implementing least privilege access and managing entitlements in Ermetic.
+- **Case Study**: Analyzing and mitigating excessive permissions scenarios.
+
+### Module 5: Just-In-Time (JIT) Access (1.5 Hours)
+
+- **Lecture**: Overview of JIT access and its benefits for cloud security.
+- **Hands-on Activity**: Configuring JIT access policies and workflows in Ermetic.
+- **Discussion**: Balancing security and accessibility with JIT.
+
+### Assessment and Feedback (30 Minutes)
+
+- **Practical Assessment**: Participants will demonstrate their ability to use Ermetic's CNAPP solutions to secure a cloud environment.
+- **Feedback Session**: Collect feedback on the course content, delivery, and hands-on experience.
+
+## Conclusion
+
+Summarize key takeaways, discuss additional resources for further learning (Ermetic documentation, webinars, community forums), and encourage participants to apply the learned skills in their cloud environments for enhanced security and compliance.
