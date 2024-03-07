@@ -1,0 +1,53 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListRoles",
+                "iam:ListPolicies"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRolePolicies",
+                "iam:PutRolePolicy"
+            ],
+            "Resource": "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetSAMLProvider",
+                "iam:UpdateSAMLProvider"
+            ],
+            "Resource": "arn:aws:iam::*:saml-provider/AWSSSO_*_DO_NOT_DELETE"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sso:AttachManagedPolicyToPermissionSet",
+                "sso:CreateAccountAssignment",
+                "sso:CreatePermissionSet",
+                "sso:DeleteAccountAssignment",
+                "sso:DeletePermissionSet",
+                "sso:Describe*",
+                "sso:DetachManagedPolicyFromPermissionSet",
+                "sso:Get*",
+                "sso:List*",
+                "sso:ProvisionPermissionSet",
+                "sso:PutInlinePolicyToPermissionSet",
+                "sso-directory:List*",
+                "sso-directory:Search*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
