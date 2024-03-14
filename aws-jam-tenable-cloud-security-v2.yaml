@@ -171,7 +171,7 @@ Resources:
               - Effect: "Allow"
                 Action:
                  - "sts:AssumeRole"
-                Resource: "*"
+                Resource: !GetAtt OHcnappCGLambdaInvokerRole.Arn
         - PolicyName: "sid2"
           PolicyDocument:
             Version: "2012-10-17"
@@ -226,6 +226,7 @@ Resources:
         - Key: Name
           Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappCGLambaInvokerRole"]]
 
+################
   OHcnappAdminRole:
     Type: AWS::IAM::Role
     Properties:
