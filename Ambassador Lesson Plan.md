@@ -42,8 +42,8 @@ By the end of this course, participants will:
 ### Module 1: Introduction to - Tenable Cloud Security CNAPP (2 Hours)
 
 - **Lecture**: Overview of CNAPP and its importance in cloud security.
-- **Application:**: Use-case discussion, examples of cloud breaches.
-- **Hands-on Lab** : Walkthrough the Tenable Cloud Security Dashboard, Onboard AWS accounts.
+- **Application:**: Better together presentation.  Use-case discussion, examples of cloud breaches.
+- **Hands-on Lab** : Walkthrough the Tenable Cloud Security Dashboard, Onboard AWS accounts, setup integration withe Webhooks
 - **Demonstration (optional**):  
 
 ### Module 2: Cloud Workload Protection Platform (CWPP) (1 Hours)
@@ -67,12 +67,6 @@ By the end of this course, participants will:
 - **Case Study**: Analyzing and mitigating excessive permissions scenarios.
 - Use-case Demo:  Example of excessive permissions
 
-### Module 5: Just-In-Time (JIT) Access (2 Hours) (optional)
-
-- **Lecture**: Overview of JIT access and its benefits for cloud security.
-- **Hands-on Lab**: Configuring JIT access policies and workflows in - Tenable Cloud Security.
-- **Application:**: Balancing security and accessibility with JIT.
-
 ### AWS Jams Challenge (60 Minutes) (optional)
 
 - **Hands-On Challenge**:  Use AWSJams challenge to support the training sessions.
@@ -80,3 +74,12 @@ By the end of this course, participants will:
 ## Conclusion
 
 Summarize key takeaways, discuss additional resources for further learning (- Tenable Cloud Security documentation, webinars, community forums), and encourage participants to apply the learned skills in their cloud environments for enhanced security and compliance.
+
+____________
+## Continous Learining
+
+### Continous Learning 1: Just-In-Time (JIT) Access (2 Hours) (optional)
+
+- **Lecture**: Overview of JIT access and its benefits for cloud security.
+- **Hands-on Lab**: Configuring JIT access policies and workflows in - Tenable Cloud Security.
+- **Application:**: Balancing security and accessibility with JIT.
