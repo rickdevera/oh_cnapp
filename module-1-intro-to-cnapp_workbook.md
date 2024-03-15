@@ -12,6 +12,7 @@ This document outlines test scripts designed as a startup guide:
 1.  Overview of the Dashboard
 1.  Integration tools
 1.  Documentation/help
+1.  Using CNAPPgoat tools
 
 ### Test Environment
 
