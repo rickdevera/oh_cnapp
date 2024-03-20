@@ -30,24 +30,65 @@ This document outlines test scripts designed as a startup guide:
 
 ## Test Steps
 
-### 1.  Onboaording AWS
+### 1.  Onboaording AWS 
 
 [Reference - Onboard an Account](https://docs.ermetic.com/v1/docs/onboard-aws#onboard-an-account)
 
-### 1. Navigate Console
+1.  `Login` on to Tenable Cloud Security (https://cloud.tenable.com/
+1.  `Select` to the **Tenable Cloud Security** menu tile
+1.  Connect to AWS account  
+    1.  `Navigate` to the left menu
+    1.  `Select` **Accounts->AWS**
+    1.  `Click` on **Add Account**
+    1.  `Type` in a Name of the Account (ie.  **AWSDemoAccount**)
+    1.  `Click` on **Active Regions** pull-down menu and 
+        1.  `Select`  **us-east-1, us-east-2, us-west-1, and us-west-2**
+        1.  Leave other selections blank
+    1.  `Click` on **Next**
+    1.  `Enable` the following features
+        1.  Monitoring (read-only)
+        1.  Remediation (read-write)
+        1.  EC2 Instance Scanning
+        1.  ECR Scanning
+    1.  `Click` on **Next**
+    1.  While the **Cloud Formation (AWS Console)** is selected
+        1.  `Click` on **click here**
+    This will generate the Cloud Formation Template with the proper IAM roles and permissions to connect with Tenable Cloud Security and guide you to **Create** a Cloud Formation stack.
+    (ie.  **CloudFormation->Stacks->Create Stack**)
+
+    1.  If you haven't done so already, `Login` to the AWS Console.
+    1.  In the <u>AWS Console</u>  
+        1.  `Verify` the parameters
+        1.  `Scroll` down to the bottom of the page
+        1.  `Check` the **Acknowledge** statement
+        1.  `Click` on **Create Stack**
+        1.  When completed `Click` on **Outputs**
+        1.  `Copy/record` the **Role ARN**
+    1.  On the <u>Tenable Cloud Security</u> dashboard
+        1.   `Paste` the **Role ARN** from the step above.
+        1.  `Click` on **Next** to complete
+        **Note:  Cloud Trail configuration will not be completed in this module, however you can follow the directions in teh documenation if you want to continue adding Cloud Trail
+        1.  `Click` on **Finish**
+        1.  `Click` on **Done**
+
+![Example of Completed Account](images/cloud_account-module-1.png)
+
+**Note:** Depending on the size of the account (assests/services) the system can take several minutes to process the data in the account.
+
+
+    
+### 1. Navigating through the Dashboard Console
 
 #### Objective
 
-Navigate to different areas of the product by using left hand navigation menu
+Navigate to different areas of the product by using left hand navigation menu and widges
 
 #### Steps
 
 1. `Move` mouse pointer to far-left menu with icons.  Notice the pullout menu item
 
 ![Left Menu](images/LeftHandMenu.png)
-Table explains the menu items
-
-https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu
+[Left Menu Description](https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu)
 
 
 For a detailed description goto to 
