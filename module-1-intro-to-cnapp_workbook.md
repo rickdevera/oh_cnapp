@@ -1,7 +1,7 @@
 
 [IMAGEDIR]: "images/LeftHandMenu.png"
 
-# Tenable Cloud Secuirty Lab Workbook - Module 1
+# Tenable Cloud Security Lab Workbook - Module 1
 
 ## Introduction
 
@@ -75,32 +75,100 @@ This document outlines test scripts designed as a startup guide:
 
 **Note:** Depending on the size of the account (assests/services) the system can take several minutes to process the data in the account.
 
-
+_________
     
-### 1. Navigating through the Dashboard Console
+### 1. Navigating Dashboard Console
 
 #### Objective
 
-Navigate to different areas of the product by using left hand navigation menu and widges
+Navigate to different areas of the dashboard for familiarization
 
 #### Steps
+##### Findings
 
-1. `Move` mouse pointer to far-left menu with icons.  Notice the pullout menu item
+1.  `Move` mouse pointer to far-left menu with icons.  Notice the pullout menu item  
 
-![Left Menu](images/LeftHandMenu.png)
-[Left Menu Description](https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu)
+<img src="images/LeftHandMenu.png" width="175">
 
 
-For a detailed description goto to 
 
-1.  Goto the "Dashboard"
-Table explains the dashboard
+[Click here for Left Menu Descriptions](https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu)
 
-https://docs.ermetic.com/docs/dashboard#dashboard-widgets
 
-Toxic Combinations
+1.  From the left menu, `Select`  **Dashboard**
+1.  For quick view of your assets in your accounts
+      1.  `Click` on **Inventory->AWS**
+      1.  `Click` on **IAM Roles**
+      1.  Note the filter's on the top bar of the table
+      1.  Filter on Severity level  
+      1. `Click` on the plus (+) sign on the top of the dashboard
+      1.  `Click` on **Finding Severity**
+1.  From the left menu, `Click` on **Findings**
+      1.  `Click` on **Severity** 
+      1.  `Select` **Critical** and **High** 
+      1.  The dashboard will only show Findings of severity level Critical and High
+1.  From the left menu, `Click` on **Dashboard**
 
-https://docs.ermetic.com/docs/dashboard#list-of-toxic-combinations
+1.  Using the table below to view the different widgets of the dashboard
+1.  Form the main dashboard:
+   1. `Click` on **Compute Resources->Lambda Functions**
+   1.  This displays the list of Lambda functions
+   1. `Click` on **Compute Resources->
+
+#### Explanation of Dashboard Widgets
+
+| **Dashboard Widgets** | **Description** |
+|-----------------------|-----------------|
+|Organiziation View     | The top-left bar of the dashboard shows an overview of the connected accounts in each one of the cloud service provider (CSP) organizations. |
+| Asset Inventory (Resources) |  Inventory (Resources)	The top-right bar of the dashboard shows a breakdown of assets in your environment by resource category. |
+| Open Findings | See a high-level overview of open findings in Tenable Cloud Security. Findings represent at-risk identities and resources, including hard-to-spot toxic combinations. |
+| Trends | Track the status of findings by viewing a snapshot of activity data over a set period of time. |
+| Compliance | Ensure compliance with common industry standards and security best practices. |
+| Toxic Combinations | View resources with multiple risks that, when combined, are both hard-to-spot and pose a greater threat to your organization |
+| If you have only 5 minutes | If you’re short on time, or just want to focus on the most serious issues, use this list to assess and remediate the highest priority findings in your environment. |
+| Resources Exposing Secrets | Assess and remediate vulnerable resources that expose important secrets (such as passwords, credentials, and keys). Such resources are often overlooked, and can be leveraged by attackers. |
+| Public Resources | Assess and remediate findings related to public resources, categorized by type, and prioritized by risk severity. |
+| Anomaly Detection | Track suspicious activity in your environment by viewing the number of open anomaly-related findings over time (last 7, 30, or 90 days) | 
+| Top Accounts at Risk | Assess and remediate the most at-risk accounts in your organization, with a breakdown of the number of findings per severity level. |
+| Top Finding Types | Assess and remediate the highest risk finding types, with a breakdown of the number of findings per severity level. |
+| Workload Protection | <ul><li>Vulnerability Status. View a breakdown of machines by the highest severity vulnerability that was found on them, along with the number of opened findings. </li><li> Critical CVEs. View critical CVEs found on your machines, prioritized by those with known exploits and those that were recently seen. </li<li>Operating System Status. View a breakdown of machines by the status of the installed OS. Such issues can indicate that workload security is compromised, and should be remediated by updating the OS </li></ul>|
+
+##### Table of Toxic Combinations
+
+- **3rd party** identity with access to **sensitive data**  
+- App engine service with critical vulnerabilities and high privileges
+- Cloud run service with critical vulnerabilities and high privileges
+- ECS service with critical vulnerabilities and high privileges
+- External principal with high privileges
+- External principals with access to sensitive data
+- Guest user with high privileges
+- Guest user access to sensitive data
+- IAM user with no MFA and high privileges
+- Public cloud run service with critical vulnerabilities / high privileges
+- Public data resources with sensitive data
+- Public storage accounts with shared key access
+- Public ECS service with critical vulnerabilities / high privileges
+- Public functions with high privileges
+- Public virtual machine with high privileges
+- Public workloads with critical vulnerabilities / high privileges
+- Public workloads with an unpatched OS / high privileges
+
+##### Filtering Data
+
+1.  `Click` on the link below to learn how to  filter the data throughout in the console to find specific resources, activities, and other types of data.
+
+[Filtering Data](https://docs.ermetic.com/docs/filter-data#filter-data-in-tables)
+
+#### Summarize
+#### Review Questions
+
+
+
+
+
+
+_________
+
 
 
 1.  User Profile
@@ -172,4 +240,3 @@ Test the capability of Tenable Cloud Security to identify vulnerabilities within
 
 ### Conclusion
 
-This set of test scripts provides a baseline for evaluating the CSPM features of Tenable Cloud Security. Adjustments may be required based on specific cloud configurations and organizational security policies.
