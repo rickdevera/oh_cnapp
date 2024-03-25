@@ -77,43 +77,31 @@ This document outlines test scripts designed as a startup guide:
 
 _________
     
-### 1. Navigating Dashboard Console
+### 1. Learning Console
 
 #### Objective
 
-Navigate to different areas of the dashboard for familiarization
+Navigate to different areas of the dashboard for familiarization, learn to filter findings.
 
 #### Steps
-##### Findings
 
 1.  `Move` mouse pointer to far-left menu with icons.  Notice the pullout menu item  
 
 <img src="images/LeftHandMenu.png" width="175">
 
 
+1.  For an explation of the each menu item, `click` the 
+[link.](https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu)
 
-[Click here for Left Menu Descriptions](https://docs.ermetic.com/docs/navigate-the-console#lefthand-navigation-menu)
 
+1.  `Click` on the **top-right** menu button labeled **All Accounts**
+1.  `Verify` the cloud account to view.
+- **Note:** The accounts can be organized by folder under the **Settings**
+
+#### Dashboard Navigation
 
 1.  From the left menu, `Select`  **Dashboard**
-1.  For quick view of your assets in your accounts
-      1.  `Click` on **Inventory->AWS**
-      1.  `Click` on **IAM Roles**
-      1.  Note the filter's on the top bar of the table
-      1.  Filter on Severity level  
-      1. `Click` on the plus (+) sign on the top of the dashboard
-      1.  `Click` on **Finding Severity**
-1.  From the left menu, `Click` on **Findings**
-      1.  `Click` on **Severity** 
-      1.  `Select` **Critical** and **High** 
-      1.  The dashboard will only show Findings of severity level Critical and High
-1.  From the left menu, `Click` on **Dashboard**
-
-1.  Using the table below to view the different widgets of the dashboard
-1.  Form the main dashboard:
-   1. `Click` on **Compute Resources->Lambda Functions**
-   1.  This displays the list of Lambda functions
-   1. `Click` on **Compute Resources->
+1.  Use the Table below or this [link (*updated*)](https://docs.ermetic.com/docs/dashboard#dashboard-widgets) for an explanation for the Dashboard
 
 #### Explanation of Dashboard Widgets
 
@@ -133,110 +121,33 @@ Navigate to different areas of the dashboard for familiarization
 | Top Finding Types | Assess and remediate the highest risk finding types, with a breakdown of the number of findings per severity level. |
 | Workload Protection | <ul><li>Vulnerability Status. View a breakdown of machines by the highest severity vulnerability that was found on them, along with the number of opened findings. </li><li> Critical CVEs. View critical CVEs found on your machines, prioritized by those with known exploits and those that were recently seen. </li<li>Operating System Status. View a breakdown of machines by the status of the installed OS. Such issues can indicate that workload security is compromised, and should be remediated by updating the OS </li></ul>|
 
-##### Table of Toxic Combinations
 
-- **3rd party** identity with access to **sensitive data**  
-- App engine service with critical vulnerabilities and high privileges
-- Cloud run service with critical vulnerabilities and high privileges
-- ECS service with critical vulnerabilities and high privileges
-- External principal with high privileges
-- External principals with access to sensitive data
-- Guest user with high privileges
-- Guest user access to sensitive data
-- IAM user with no MFA and high privileges
-- Public cloud run service with critical vulnerabilities / high privileges
-- Public data resources with sensitive data
-- Public storage accounts with shared key access
-- Public ECS service with critical vulnerabilities / high privileges
-- Public functions with high privileges
-- Public virtual machine with high privileges
-- Public workloads with critical vulnerabilities / high privileges
-- Public workloads with an unpatched OS / high privileges
+
+####  Manipulating Data
+
+
+
+##### Inventory Search Bar
+
+1.  Use the **search bar** above the dashboard to find resource across your entire multi-cloud environment
+1.  `Enter` the text  **CNAPPgoat**  
+1.  `Click` on **IAM Users**
+1.  Note the list of IAM Users displayed for that *Resource type*
+1.  
 
 ##### Filtering Data
 
+1.  `Click` on **Findings**
+1.  You can *filter* the output
+   1.  `Click` on **Severity** and `Select` **Critical and High**  
+      Note:  **Severity**  is fully explained in this [link](https://docs.ermetic.com/v1/docs/en/navigate-the-console#colorcoded-risk-severity)
+   1.  Note this displays all *findings* with the *Severity* level selected.
+1.  You can also ***exclude** the types of findings
+
 1.  `Click` on the link below to learn how to  filter the data throughout in the console to find specific resources, activities, and other types of data.
 
-[Filtering Data](https://docs.ermetic.com/docs/filter-data#filter-data-in-tables)
+`Click` on this [link](https://docs.ermetic.com/docs/filter-data#filter-data-in-tables) for additional information on filtering data.
 
-#### Summarize
-#### Review Questions
+#### Challenge Questions
 
-
-
-
-
-
-_________
-
-
-
-1.  User Profile
-
-
-
-1. **Initiate Discovery:**
-   - Navigate to the asset discovery section.
-   - Trigger a manual discovery scan or wait for the next scheduled scan.
-
-1. **Verify Discovery:**
-   - Check the list of discovered assets in Tenable Cloud Security.
-   - Confirm that all deployed resources are accurately identified and listed.
-
-1. **Documentation:**
-   - Take screenshots or export the list of discovered assets.
-   - Document any discrepancies or issues.
-
-### 1. Compliance Monitoring
-
-#### Objective
-
-Ensure that Tenable Cloud Security can assess cloud environments against pre-defined compliance standards and policies.
-
-#### Steps
-
-1. **Define Compliance Standards:**
-   - Verify that compliance standards (e.g., CIS AWS Foundations Benchmark) are configured in the platform.
-
-1. **Conduct Compliance Scan:**
-   - Initiate a compliance scan against your cloud environment.
-
-1. **Evaluate Results:**
-   - Review the compliance assessment report.
-   - Check for any violations or non-compliant resources.
-
-1. **Remediation Verification:**
-   - Apply remediation steps to non-compliant resources.
-   - Re-run the compliance scan to verify fixes.
-
-1. **Documentation:**
-   - Record findings, remediation actions, and post-remediation results.
-
-### 1. Vulnerability Assessment
-
-#### Objective
-
-Test the capability of Tenable Cloud Security to identify vulnerabilities within the cloud environment.
-
-#### Steps
-
-1. **Setup:**
-   - Ensure cloud resources with known vulnerabilities are present in your test environment.
-
-1. **Run Vulnerability Scan:**
-   - Navigate to the vulnerability assessment section.
-   - Initiate a scan of your cloud environment.
-
-1. **Analyze Results:**
-   - Examine the vulnerability assessment report for identified risks.
-   - Verify that known vulnerabilities are detected.
-
-1. **Remediation and Reassessment:**
-   - Address identified vulnerabilities.
-   - Perform another scan to confirm the effectiveness of remediation measures.
-
-1. **Documentation:**
-   - Document the initial findings, remedial actions taken, and the results of the reassessment scan.
-
-### Conclusion
-
+none
