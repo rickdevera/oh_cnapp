@@ -75,5 +75,20 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
     1.  `Select`  **Dashboard** left menu item
     1.  `Scroll` through the dashboard and validate all catagories found.
 1.  Identification of resource ownership to enforce accountability.
-    1.  From the Dashboard, 
+    1.  See Steps above
+1.  Visualization of network exposure to assess external access risks.
+    1.  From the Dashboard, `Select` the tile **Compute Resources->EC2 Instances**
+        1.  From the filter bar
+            1.  `Select` **Network Exposure->Internet (direct)**
+            1.  `Select` **Network Exposure Scope->All IPs**
+            1.  `Select` the **EC2** Instance
+            1.  `Select` the **Network** menu
+            [!Note] The graph view
+1.  Insights into federated identity providers like Azure AD and Okta for identity and access management. (optional if using federated identity)
+    1.  From the Left Menu, `Select` **IAM->Federated Identity Permissions**
+1.  A robust mechanism to detect and alert on misconfigurations across various cloud resources.
+
+
+        
+
 

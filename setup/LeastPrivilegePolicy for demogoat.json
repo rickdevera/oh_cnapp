@@ -213,10 +213,7 @@
         "ecr:PutImage",
         "ecr:UploadLayerPart"
       ],
-      "Resource": [
-        "arn:aws:ecr:us-east-1:296585103064:repository/cnappgoat-repo-8127864",
-        "arn:aws:ecr:us-east-2:296585103064:repository/cnappgoat-repo-1ef22b5"
-      ]
+      "Resource": "*"
     },
     {
       "Effect": "Allow",
@@ -226,10 +223,7 @@
     {
       "Effect": "Allow",
       "Action": "kms:DescribeKey",
-      "Resource": [
-        "arn:aws:kms:us-east-2:296585103064:key/6c42fede-52d6-4a0c-be1b-167e2e2ba906",
-        "arn:aws:kms:us-west-1:296585103064:key/dd357642-a857-4e8a-ba20-26926f1f9ac5"
-      ]
+      "Resource": "*"
     },
     {
       "Effect": "Allow",
@@ -240,10 +234,80 @@
         "s3:GetObjectTagging",
         "s3:PutBucketTagging"
       ],
-      "Resource": [
-        "arn:aws:s3:::cnappgoatbucket-a2d866b",
-        "arn:aws:s3:::cnappgoatbucket-a2d866b/*"
-      ]
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "tag:GetResources",
+        "tag:GetTagKeys",
+        "tag:GetTagValues",
+        "tag:TagResources",
+        "tag:UntagResources",
+        "sqs:ChangeMessageVisibility",
+        "sqs:CreateQueue",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes",
+        "sqs:GetQueueUrl",
+        "sqs:ListDeadLetterSourceQueues",
+        "sqs:ListMessageMoveTasks",
+        "sqs:ListQueues",
+        "sqs:ListQueueTags",
+        "sqs:ReceiveMessage",
+        "sqs:SendMessage",
+        "sqs:SetQueueAttributes",
+        "sqs:StartMessageMoveTask",
+        "sqs:TagQueue",
+        "sqs:UntagQueue",
+        "sns:*",
+        "ses:CancelExportJob",
+        "ses:CreateConfigurationSet",
+        "ses:CreateEmailIdentity",
+        "ses:CreateExportJob",
+        "ses:DeleteEmailIdentity",
+        "ses:GetAccount",
+        "ses:GetConfigurationSet",
+        "ses:GetConfigurationSetEventDestinations",
+        "ses:GetDedicatedIps",
+        "ses:GetEmailIdentity",
+        "ses:GetEmailIdentityPolicies",
+        "ses:GetExportJob",
+        "ses:GetIdentityDkimAttributes",
+        "ses:GetIdentityNotificationAttributes",
+        "ses:GetIdentityVerificationAttributes",
+        "ses:ListConfigurationSets",
+        "ses:ListDedicatedIpPools",
+        "ses:ListEmailIdentities",
+        "ses:ListIdentities",
+        "ses:ListTagsForResource",
+        "ses:PutEmailIdentityDkimAttributes",
+        "ses:SendBulkEmail",
+        "ses:SendBulkTemplatedEmail",
+        "ses:SendEmail",
+        "ses:SendRawEmail",
+        "ses:SendTemplatedEmail",
+        "ses:TagResource",
+        "ses:UntagResource",
+    	"access-analyzer:CheckAccessNotGranted",
+        "access-analyzer:CheckNoNewAccess",
+        "access-analyzer:CreateAccessPreview",
+        "access-analyzer:GetAccessPreview",
+        "access-analyzer:GetAnalyzer",
+        "access-analyzer:GetFinding",
+        "access-analyzer:GetFindingsStatistics",
+        "access-analyzer:GetGeneratedPolicy",
+        "access-analyzer:ListAccessPreviewFindings",
+        "access-analyzer:ListAnalyzers",
+        "access-analyzer:ListArchiveRules",
+        "access-analyzer:ListFindings",
+        "access-analyzer:ListPolicyGenerations",
+        "access-analyzer:ListTagsForResource",
+        "access-analyzer:StartPolicyGeneration",
+        "access-analyzer:TagResource",
+        "access-analyzer:UntagResource",
+        "access-analyzer:ValidatePolicy"
+    	],
+    	"Resource": "*"
     },
     {
       "Effect": "Allow",
@@ -251,7 +315,7 @@
         "s3:GetObject",
         "s3:GetObjectTagging"
       ],
-      "Resource": "arn:aws:s3:::cnappgoat-http-bucket-d89c8e8/*"
+      "Resource": "*"
     }
   ]
 }

@@ -156,9 +156,11 @@ Resources:
       Tags:
         - Key: Name
           Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappLambaRole"]]
+
 ######
 ## For the CG Vulnerable Lambda
 #####
+
   OHcnappCGStandardUser:
     Type: AWS::IAM::User
     Properties:
@@ -333,6 +335,8 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 378900f8-dfab-4a33-9496-c1ef74c8516b
+
+
   OHcnappWinDemoSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -357,6 +361,7 @@ Resources:
           ToPort: 0
           CidrIp: 0.0.0.0/0
       VpcId: !Ref OHcnappVPC
+
   OHcnappPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -387,7 +392,7 @@ Resources:
       VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
-          Value: !Ref 
+          Value: !Ref OHcnappPrivateSG
   OHcnappVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
@@ -397,33 +402,27 @@ Resources:
       Tags:
         - Key:  Name 
           Value: !Join ["", [!Sub "${ProjectName}-${Environment}-", !Ref AWS::Region, "-VPC" ]]
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: fddde793-4fce-4f6f-939d-0d8781d3ba3d
+
   OHcnappPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref OHcnappVPC
       CidrBlock: 10.1.2.0/24
-      AvailabilityZone: !Select 
-        - '0'
-        - !GetAZs ''
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: d1663f3a-2a13-4f2e-bf43-8adbf683a5cc
+      AvailabilityZone: !Select ['0', !GetAZs ''] 
+  OHcnappPrivateSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref OHcnappVPC
+      CidrBlock: 10.1.3.0/24
+      AvailabilityZone: !Select ['1', !GetAZs '']
+
   OHcnappIGW:
     Type: 'AWS::EC2::InternetGateway'
-    Properties: {}
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: b9b95cb8-e623-40d8-9c19-b6c361c76e79
   OHcnappRouteTable:
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref OHcnappVPC
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: 098c11b6-3f03-4c58-bd8a-be133ef73fe9
+
   OHcnappPublicRoute:
     Type: 'AWS::EC2::Route'
     Properties:
@@ -446,9 +445,13 @@ Resources:
     Properties:
       VpcId: !Ref OHcnappVPC
       CidrBlock: 10.1.1.0/24
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: ed11ad6b-d0c4-4304-bcba-34b112fbb9bd
+      AvailabilityZone: !Select [0, !GetAZs '']
+  OHcnappPublicSubnet2:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      VpcId: !Ref OHcnappVPC
+      CidrBlock: 10.1.2.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
   OHcnappPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -510,7 +513,6 @@ Resources:
              - Ref: OHcnappPublicSG
            SubnetId: 
             Ref: OHcnappPublicSubnet
-           DeleteOnTermination: "true"
       KeyName: !Ref OHcnappKeyPair 
       Tags:
         - Key: Name
@@ -523,63 +525,16 @@ Resources:
       Tags: 
         - Key: Name
           Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappKeyPair"]]
-
-
-#  Windows10EC2:
-#    Type: 'AWS::EC2::Instance'
-#    Properties:
-#      InstanceType: t3.medium
-#      ImageId: ami-0000ad655517bbcf5
-#      ImageId:  !FindInMap 
-#        - RegionMap
-#        - !Ref 'AWS::Region'
-#        - W10AMI
-#      NetworkInterfaces:
-#         - AssociatePublicIpAddress: "true"
-#           PrivateIpAddress: '10.1.1.6'
-#           DeviceIndex: "0"
-#           GroupSet:
-#             - Ref: OHcnappWinDemoSG
-#           SubnetId: 
-#            Ref: OHcnappPublicSubnet
-#           DeleteOnTermination: "true"
-#      Tags:
-#        - Key: Name
-#          Value: "WindowsRDP"
+ 
   AwsRouteTabAssoc:
     Type:  AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId: !Ref OHcnappRouteTable
       SubnetId: !Ref OHcnappPublicSubnet
-#  GitlabsS3Policy:
-#    Type:  AWS::IAM::Policy
-#    Properties:
-#      PolicyName: "gl-s3-policy"
-#      PolicyDocument:
-#        Version: "2012-10-17",
-#        Statement": 
-#          - Effect: Allow
-#            Action: 
-#              - 's3:PutObject'
-#              - 's3:GetObject'
-#              - 's3:DeleteObject'
-#              - 's3:PutObjectAcl'
-#            Resource: 'arn:aws:s3:::gl-*/*'
-#          - Effect: Allow
-#            Action: 
-#              - 's3:ListBucket'
-#              - 's3:AbortMultipartUpload'
-#              - 's3:ListMultipartUploadParts'
-#              - 's3:ListBucketMultipartUploads'
-#            Resource: 'arn:aws:s3:::gl-*'
-#  GitLabS3AccesRole:
-#    Type:  AWS::IAM::ServiceLinkedRole
-#    Properties:
-#      AWSServiceName: "ec2.amazonaws.com"        
+       
 Outputs:
   ExternalId:
     Value:  !Select [2, !Split [ '/', !Ref  AWS::StackId]]
-
 Mappings:
   RegionMap:
 #    us-east-1:
