@@ -23,7 +23,7 @@
 
 ### Scenario:
 
-Acme Corp has recently expanded its cloud infrastructure to utilize services from AWS, Azure, and GCP to enhance scalability and redundancy. However, this multi-cloud strategy has led to complexity in managing security postures and ensuring compliance with various standards. They need a CSPM solution that provides comprehensive visibility and control over their cloud environment.  Below are the customer requirements.
+Acme Corp has recently expanded its cloud infrastructure to utilize services from AWS, Azure, and GCP to enhance scalability and redundancy. However, this multi-cloud strategy has led to complexity in managing security postures and ensuring compliance with various standards. They need a CSPM solution that provides comprehensive visibility and control over their cloud environment.  Below are the customer requirements. <sup>(AI Generated)</sup>
 
 #### Customer Requirements:
 
@@ -44,10 +44,7 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
 1. Custom policy creation to enforce specific security postures.
 1. Special attention to misconfigurations in identity providers.
 1. Automatic categorization of findings to streamline remediation processes.
-1. The ability to automatically mitigate misconfigurations 
 1. Compliance checks against industry standards and best practices, including CIS Benchmarks.
-1. Evaluation against common compliance standards such as SOC 2, ISO 27001, and PCI-DSS.
-1. Consideration of regulatory frameworks like GDPR and LGPD for data protection.
 1. Creation and filtering of findings by custom compliance standards set by Acme Corp.
 1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
 
@@ -212,4 +209,43 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
         
         [Reference:  Asset Inventory (online docs)](https://docs.ermetic.com/docs/view-your-asset-inventory)
 
-    1.  
+    1.  Compliance and Reporting Requirements
+        1.  Compliance checks against industry standards and best practices, including CIS Benchmarks.
+
+
+        1. Creation and filtering of findings by custom compliance standards set by the company.
+
+        1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
+
+            ###### Steps
+
+            1.  From the Dashboard, `Scroll` down to view the **Compliance** widget.  
+                1.  `Select` from the list, **Last 7 days** to view the compliance score from the last 7-days.
+                1.  `Select` **Compliance** from the left-menu.
+                1.  `Expand` **CIS CCM 4.0.2**.
+                1.  `Select` and `Expand` a category to view the policies and the failed resources.
+            1.  From the left-menu, `Click` on **Findings**
+                1.  `View` the filter bar and verify if **Compliances** is one of the avaliable filter options.
+                    1.  If not, `Click` on the **+** symbol and `Select` **Compliances**
+                1.  `Select` **Compliances** and `Choose` **CSA CCM 4.0.2**
+                1.  `Select` the download symbol on the top right side *(indicated by down arror and underscore)*
+                1.  `Choose` **Export** and save to local directory.
+            1.  From the left-menu, `Select` **Reports**
+                1.  `Click` on the **New Reports** button (top-right)
+                1.  `Select` the **Compliance Report**  from the pull-down list.
+                1.  `Select` **CIS CCM 4.0.2** as the Compliance type from teh pull-down list.
+                1.  `Choose` **PDF** or **CSV**
+                1.  `Select` **Schedule**
+                1.  `Enter` the **Delivery times**
+                    1.  For example:  **Daily** at **12:00 AM** UTC
+                1.  `Enter` and emial address
+                1.  `Click` on **Schedule**
+                Your report is now schedule.
+
+#### Review Questions
+
+1.  Start Kahoot
+
+
+
+
