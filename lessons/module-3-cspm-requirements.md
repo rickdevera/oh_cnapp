@@ -27,26 +27,34 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
 
 #### Customer Requirements:
 
-1. A complete inventory of their cloud assets across AWS, Azure, and GCP.
-1. Detailed visibility into the metadata and relationships of those resources. 
-1. The ability to search and filter across clouds for quick access to specific data points.
-1. A contextual dashboard that categorizes resources by type for better analysis.
-1. Identification of resource ownership to enforce accountability.
-1. Visualization of network exposure to assess external access risks.
-1. Insights into federated identity providers like Azure AD and Okta for identity and access management.
-1. A robust mechanism to detect and alert on misconfigurations across various cloud resources.
-1. Step-by-step guidance to remediate identified misconfigurations.
-1. Prioritization of risks based on specific contexts to focus on the most critical issues first.
-1. Monitoring for any publicly exposed or shared resources to prevent unintended data leaks.
-1. Alerts for any unencrypted data stores which could pose a risk of data breaches.
-1. Identification of outdated or insecure network communication channels.
-1. Detection of exposed secrets and a lack of key rotation which could lead to compromised credentials.
-1. Custom policy creation to enforce specific security postures.
-1. Special attention to misconfigurations in identity providers.
-1. Automatic categorization of findings to streamline remediation processes.
-1. Compliance checks against industry standards and best practices, including CIS Benchmarks.
-1. Creation and filtering of findings by custom compliance standards set by Acme Corp.
-1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
+##### Discovery
+
+    1. A complete inventory of their cloud assets across AWS, Azure, and GCP.
+    1. Detailed visibility into the metadata and relationships of those resources. 
+    1. The ability to search and filter across clouds for quick access to specific data points.
+    1. A contextual dashboard that categorizes resources by type for better analysis.
+    1. Identification of resource ownership to enforce accountability.
+    1. Visualization of network exposure to assess external access risks.
+    1. Insights into federated identity providers like Azure AD and Okta for identity and access management.
+
+##### Misconfigurations
+
+    1. A robust mechanism to detect and alert on misconfigurations across various cloud resources.
+    1. Step-by-step guidance to remediate identified misconfigurations.
+    1. Prioritization of risks based on specific contexts to focus on the most critical issues first.
+    1. Monitoring for any publicly exposed or shared resources to prevent unintended data leaks.
+    1. Alerts for any unencrypted data stores which could pose a risk of data breaches.
+    1. Identification of outdated or insecure network communication channels.
+    1. Detection of exposed secrets and a lack of key rotation which could lead to compromised credentials.
+    1. Custom policy creation to enforce specific security postures.
+    1. Special attention to misconfigurations in identity providers.
+    1. Automatic categorization of findings to streamline remediation processes.
+
+##### Compliance
+
+    1. Compliance checks against industry standards and best practices, including CIS Benchmarks.
+    1. Creation and filtering of findings by custom compliance standards set by Acme Corp.
+    1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
 
 #### Steps to meet the requirements
 
