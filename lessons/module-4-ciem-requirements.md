@@ -21,38 +21,94 @@
 - AWS account.
 - Pre-defined compliance standards and policies.
 
-### Requirements
+Let's create an example scenario for a sales team where their customer is looking for a Cloud Infrastructure Entitlement Management (CIEM) solution that meets several specific requirements on their AWS platform:
 
-_______________
-Below are individual requirements categorized by use-cases and the steps used to meet the requirements.
+---
 
-#### Effective Permissions
 
-- Visibility into cloud identities (IAM Users/Groups, AWS SSO, Azure RBAC, Azure AD, Cloud Identity, GCP IAM, external identities, etc.)
-- Visibility into effective permissions of federated identities (e.g. Okta, Azure AD, Ping Identity)
-- Visibility into effective permissions in AWS (IAM Policies, Conditions, Resource policies, PB, SCPs, etc)
-- Visibility into effective permissions in Azure (human identities, service principals, external identities, etc)
-- Visibility into effective permissions in GCP (IAM, user-managed keys, conditions, etc)
-- Visualization of effective permissions in cloud (identity perspective, resource perspective)
-- Analysis of effective permissions in cloud (query resources identities, effective access)
+### Use Case Scenario: RCD Systems' CIEM Solution with Tenable Cloud Security
 
-#### Identity Governance
+#### Background
+RCD Systems is expanding rapidly, integrating more services and applications into its cloud infrastructure. With this expansion, managing and securing cloud identities and their permissions has become increasingly complex. The company needs a CIEM solution that provides comprehensive visibility and control over cloud identities and their entitlements across AWS, Azure, and GCP platforms to maintain a robust security posture. <sup>AI generated</sup>
 
-- Risk-based visibility into cloud identities 
-- Contextual risk prioritization for identities
-- Visibility into 3rd party access
-- Visibility into misconfigured identities (e.g. inactivity, static keys, MFA)
+#### Customer Requirements 
 
-#### Least Privilege
+##### Effective Permissions
 
-- Analyze excessive permissions based on cloud provider APIs
-- Analyze excessive permissions based on cloud activity logs
-- Visualize excessive permissions based on analysis
+1. **Visibility into Effective Permissions**:  The CIEM solution must offer detailed insights into IAM Policies, Conditions, Resource Policies, Permission Boundaries (PB), and Service Control Policies (SCPs) within AWS to understand the effective permissions of identities.
 
-#### Remediation
 
-Generate least-privilege recommendations for AWS
-Generate least-privilege recommendations for Azure
-Generate least-privilege recommendations for GCP
-IaC templates (e.g. Terraform, CloudFormation) for remediation
-Automatic remediation for identities with excessive access
+##### Identity Governance
+
+1. **Contextual Risk Prioritization for Identities**: The CIEM solution should evaluate and prioritize identity risks based on their access rights and activities.
+
+1. **Visibility into 3rd Party Access**: Monitoring and managing third-party access to RCD Systems’s cloud environments is crucial for preventing unauthorized access.
+
+1. **Visibility into Misconfigured Identities**: Identifying identities with potential risks, such as inactivity, use of static keys, or lack of MFA, is vital for maintaining security hygiene.
+
+##### Least-Privilege Access
+
+1. **Analyze Excessive Permissions**: The solution should analyze permissions based on cloud provider APIs and activity logs to identify and highlight excessive permissions.
+
+1. **Visualize and Remediate Excessive Permissions**: It should offer visualization tools for excessive permissions and generate recommendations for achieving least-privilege access.
+
+##### Remediation
+
+1. **Least-Privilege Recommendations and IaC Templates**: Generate actionable recommendations for quick remediation.
+
+1. **Automatic Remediation**: For identities identified with excessive access, the solution should offer capabilities for automatic remediation.
+
+##### Alerting and Continous Monitoring
+
+1.  System must provide monitoring and alerts of updates and changes to identity permissions.
+
+#### Demo Steps
+
+1. **Setup and Configuration**: Begin by setting up Tenable Cloud Security in RCD Systems’s cloud environment. Integrate with AWS, Azure, and GCP to ensure comprehensive coverage.
+
+##### Meeting requirements for Effective Permissions
+
+1. **Demonstrate Effective Permissions**: Utilize Tenable Cloud Security to scan and visualize effective permissions across cloud identities, assessing federated, AWS, Azure, and GCP identities for compliance with the principle of least privilege.
+
+    1.  From the left-menu on the Tenable Cloud Security Dashboard
+        1.  `Click` on **IAM->Identity Intelligence**
+        1.  `Click` on **Permission Severity** and filter on **Critical and High**  
+            - Note under the **Services** and **Resources** this will show the number of services and resources that identity has access to.  
+        `Click` [Identity Column Table](https://docs.ermetic.com/docs/identity-intelligence#identity-column-data) for additional information.
+        1.  `Click` on **IAM->Permission Query**
+
+            - This will perform flexible and granular queries across all cloud identities to quickly surface problems of interest related to granted permissions. 
+            - Use case examples:
+                - Identities in a non-production account that have permissions in a production account, with an unrestricted resource scope.
+                - Storage buckets that a specific identity has permissions to delete objects on.
+                - Identity users that have Data Access permissions to a specific resource ID
+
+
+##### Identity Governance
+
+1. **Risk Assessment and Prioritization**: Conduct a risk assessment of cloud identities, prioritizing remediation efforts based on the contextual risk associated with each identity.
+Contextual Risk Prioritization for Identities: The CIEM solution should evaluate and prioritize identity risks based on their access rights and activities.
+
+
+
+1. **Visibility into 3rd Party Access**: Monitoring and managing third-party access to CloudTech’s cloud environments is crucial for preventing unauthorized access.
+
+    1.  `Click` on **Inventory**
+    1.  `Click` on **IAM->IAM Roles**
+    1.  `Click` the **3rd Party** filter to view cross account access.
+
+1. **Visibility into Misconfigured Identities**: Identifying identities with potential risks, such as inactivity, use of static keys, or lack of MFA, is vital for maintaining security hygiene.
+
+##### Least Privileged Access
+
+1. **Least-Privilege Analysis**: Analyze permissions to identify excessive access rights. Use Tenable Cloud Security’s analytics to pinpoint areas where the principle of least privilege can be better enforced.
+
+##### Remediation
+
+1. **Recommendations and Remediation**: Generate least-privilege recommendations for all integrated cloud environments. Utilize Tenable Cloud Security’s IaC templates for quick remediation and implement automatic remediation for identities with excessive access.
+
+##### Alerting and Continouse Monitoring
+
+1. **Continuous Monitoring and Compliance**: Set up continuous monitoring and alerts for any changes in permissions or new risks identified. Regularly review and update permissions in line with Tenable Cloud Security’s recommendations to ensure ongoing compliance with best practices.
+
+B
