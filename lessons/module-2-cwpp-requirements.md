@@ -58,9 +58,44 @@ The customer is a rapidly growing FinTech startup that leverages a multi-cloud s
     1.  To remediate:
             1.   While in the details widget,  `Click` on **Findings** from the left menu
             1.   Search for the policy, **EC2 instance has critical vulnerabilties**
-            1.  `Click` on the entry
-            1.  `Click` on **Remediation** to follow the Remediation steps.
+            1.  `Filter` on  **Severity** 
+                1.  `Select` **Critical** and **High**
+            1.  `Expand` the row 
+            1.  `Click` one of the entry
+            1.  `Click` on **Remediation** to follow the Remediation steps. 
+1.  End-of-Life and Unpatched OS Detection
+    1.  From the Dashboard,   `Click` on the **Container Resources** tile
+    1.  `Select`, **Container Images**
+    1.  `Filter` on **Findings** 
+    1.  `Select` **Container image has and unpached operating system** and **Container image has an operating system which is at or nearing End-of-life**
 
+1.  CI/CD pipeline and integration
+
+    This section will step you through the setup and run a "blank" GitHub action.
+
+    [Reference: Github Example](https://docs.github.com/en/actions/using-workflows/about-workflows)  
+
+
+    1.  To view the configuration:
+        1.  From the left-menu, `Click` on **Settings**
+        1.  `Click` on **Integrations**
+        1.  `Scroll` down to the **CI/CD** section
+        1.  `Verify` the setup for the **GitHub** action
+
+    1.  To run a CI/CD scan 
+
+        1.  `Click` on **GitHub Actions**
+        1.  From the left-menu, `Click` on **Workload->CI/CD scans**
+        1.  `Verify` the **Output**
+
+
+
+1.  Validation Questions
+    1.  Find a machine name that has an unpatched OS?
+    2.  Search for EC2 michines the heve Network Exposure (direct) 
+    
+
+        
 
 
 

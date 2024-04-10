@@ -62,6 +62,8 @@ RCD Systems is expanding rapidly, integrating more services and applications int
 
 1.  System must provide monitoring and alerts of updates and changes to identity permissions.
 
+______
+
 #### Demo Steps
 
 1. **Setup and Configuration**: Begin by setting up Tenable Cloud Security in RCD Systems’s cloud environment. Integrate with AWS, Azure, and GCP to ensure comprehensive coverage.
@@ -87,9 +89,21 @@ RCD Systems is expanding rapidly, integrating more services and applications int
 ##### Identity Governance
 
 1. **Risk Assessment and Prioritization**: Conduct a risk assessment of cloud identities, prioritizing remediation efforts based on the contextual risk associated with each identity.
-Contextual Risk Prioritization for Identities: The CIEM solution should evaluate and prioritize identity risks based on their access rights and activities.
+Contextual Risk Prioritization for Identities: The CIEM solution should evaluate and prioritize identity risks based on their access rights and activities.  
 
+    1.  To conduct a risk assessment
+        1.  Discovery and Identify Cloud resources and entitlements
+        1.  Assess/Analyze permissions, identify misconfigurations
+        1.  Prioritize the risk
+        1.  Remediate
 
+    1.  Discovery
+        1.  From the left-menu, `Select` **IAM->Dashboard**
+        1.  View the different trends, graphs, charts, and `Click` on the items to drill-down
+
+    1.  Assess/analyze permissions
+        `Click` on **IAM->Permissions Query**
+    1
 
 1. **Visibility into 3rd Party Access**: Monitoring and managing third-party access to CloudTech’s cloud environments is crucial for preventing unauthorized access.
 
@@ -98,16 +112,27 @@ Contextual Risk Prioritization for Identities: The CIEM solution should evaluate
     1.  `Click` the **3rd Party** filter to view cross account access.
 
 1. **Visibility into Misconfigured Identities**: Identifying identities with potential risks, such as inactivity, use of static keys, or lack of MFA, is vital for maintaining security hygiene.
+    1.  From the left-menu, `Click` on **IAM->Identity Intelligence**
+    1.  `Select` **Labels**
+    1.  `Select` **No MFA**
+    1.  `View` the results of all IAM users/roles that have no MFA's configured.  This does not follow best practices.
+    1.  `Click` on the **Resource** Name
+    1.  `Click` on the **Credentials** menu tab
+    1.  `View` output for more details.
+
 
 ##### Least Privileged Access
 
 1. **Least-Privilege Analysis**: Analyze permissions to identify excessive access rights. Use Tenable Cloud Security’s analytics to pinpoint areas where the principle of least privilege can be better enforced.
 
+    1.  From the left menu, `Select`  **IAM->Dashboard**
+    1.  In the *Principals* section `Click` on the *Pie chart* for *Overpriviledhart for 
+
 ##### Remediation
 
 1. **Recommendations and Remediation**: Generate least-privilege recommendations for all integrated cloud environments. Utilize Tenable Cloud Security’s IaC templates for quick remediation and implement automatic remediation for identities with excessive access.
 
-##### Alerting and Continouse Monitoring
+##### Alerting and Continuous Monitoring
 
 1. **Continuous Monitoring and Compliance**: Set up continuous monitoring and alerts for any changes in permissions or new risks identified. Regularly review and update permissions in line with Tenable Cloud Security’s recommendations to ensure ongoing compliance with best practices.
 

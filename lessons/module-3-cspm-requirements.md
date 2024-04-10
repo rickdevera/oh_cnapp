@@ -111,6 +111,7 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
         This will show the activities associated for a resource.  This can also be done by selecting the resources and selecting Activities in the widget.
 
     1.  Another method is to automatically recieve notifications, follow the steps below:
+    
 
         1.  From the **Bottom-Left Menu**, `Click` on **Settings**,
         1.  `Select` **Automations->Policies**
