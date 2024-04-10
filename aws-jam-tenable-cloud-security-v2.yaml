@@ -392,7 +392,8 @@ Resources:
       VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
-          Value: !Ref OHcnappPrivateSG
+          Value: OHcnappPrivateSG
+
   OHcnappVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
@@ -407,13 +408,13 @@ Resources:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref OHcnappVPC
-      CidrBlock: 10.1.2.0/24
+      CidrBlock: 10.1.20.0/24
       AvailabilityZone: !Select ['0', !GetAZs ''] 
   OHcnappPrivateSubnet2:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref OHcnappVPC
-      CidrBlock: 10.1.3.0/24
+      CidrBlock: 10.1.21.0/24
       AvailabilityZone: !Select ['1', !GetAZs '']
 
   OHcnappIGW:
@@ -452,10 +453,11 @@ Resources:
       VpcId: !Ref OHcnappVPC
       CidrBlock: 10.1.2.0/24
       AvailabilityZone: !Select [0, !GetAZs '']
-  OHcnappPrivateSG:
+
+  OHcnappPrivateSG2:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
-      GroupName: "OHcnappPrivateSG"
+      GroupName: "OHcnappPrivateSG2"
       GroupDescription: comm between internal networks
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -478,11 +480,11 @@ Resources:
         - IpProtocol: "-1"
           FromPort: 0
           ToPort: 0
-          CidrIp: 10.1.0.0/16
+          CidrIp: 10.3.0.0/16
       VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
-          Value: "OHcnappPrivateSG"
+          Value: "OHcnappPrivateSG2"
   
   OHcnappEC2InstanceProfile:
     Type:  AWS::IAM::InstanceProfile
@@ -517,6 +519,9 @@ Resources:
       Tags:
         - Key: Name
           Value: "OHcnappPublicEC2"
+        - Key: platform
+          Value: "lab"
+
   OHcnappKeyPair:
     Type: 'AWS::EC2::KeyPair'
     Properties:
