@@ -30,6 +30,7 @@ override.tf.json
 # example: *tfplan*
 
 # Ignore CLI configuration files
+.DS_Store
 .terraformrc
 terraform.rc
 images/DALL·E 2024-03-20 09.10.32 - Design a circular badge for AWS architects who have completed Tenable Cloud Security training, in a traditional animation style. This time, make sure .webp
