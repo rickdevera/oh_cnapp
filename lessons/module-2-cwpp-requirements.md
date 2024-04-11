@@ -61,11 +61,12 @@ This section will provide the steps needed to scan a validate the customer requi
     1.  From the Tenable Cloud Security Dashboard, 
     1.  `Click` on  **Workload** from the left-menu.
     1.  `Click` on **Workload->Container Images** from the left-menu
-    1.  `Click` on the container name (ie ) will display the details of the container.
-    1.  `Search` for **Network Exposure** is **Internet (Direct)** and **Internet (Indirect)**
+    1.  `Click` on the container name under the **Name** heading to   display the details of the container.
+
     1.  `Click` on the name of one of the assets (ie.  **OHcnappWebserver1**)
-    1.  `Click` on **Workload**
-    1.  `Click` on the  **Software** tab to view all librarys, software, patches associated with this asset.  
+    1.  `Click` on the **Workload** tab
+    1.  `Click` on the  **Software** tab to view all libraries, software, patches associated with this asset. 
+     
 
 
 1.  To remediate:
