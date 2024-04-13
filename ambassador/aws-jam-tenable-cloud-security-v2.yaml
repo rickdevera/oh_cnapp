@@ -25,6 +25,12 @@ Parameters:
     Description: Password for Windows Desktop
     Type:  String
     Default: Tenable.One
+  # Use public Systems Manager Parameter
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+
+
 Resources:
 #############
 #  IAM User #
@@ -139,6 +145,24 @@ Resources:
                 Resource: "arn:aws:iam:::role/lambda_role"
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/AdministratorAccess'
+        
+  OHcnappCodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: "Code build Role"
+      AssumeRolePolicyDocument:
+        Version:  "2012-10-17"
+        Statement: 
+          - Effect:  "Allow"
+            Principal:
+              Service: "codebuild.amazonaws.com"
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: Name
+          Value:  !Join ["", [!Sub "${ProjectName}-${Environment}-OHcnappCodeBuildRole"]]
+
   OHcnappOverPrivLambdaRole:
     Type: AWS::IAM::Role
     Properties:
@@ -522,6 +546,157 @@ Resources:
         - Key: platform
           Value: "lab"
 
+  OHcnappEC2Workload01:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+#      ImageId: ami-0d803519bc74364e7
+      ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
+      NetworkInterfaces:
+         - AssociatePublicIpAddress: "true"
+           PrivateIpAddress: '10.1.1.21'
+           DeviceIndex: "0"
+           GroupSet:
+             - Ref: OHcnappPublicSG
+           SubnetId: 
+            Ref: OHcnappPublicSubnet
+      KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker run --name log4shell_vulnerable_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:log4shell_image
+      Tags:
+        - Key: Name
+          Value: "OHcnappEC2Workload01"
+        - Key: platform
+          Value: "lab"
+
+  OHcnappEC2Workload02:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+#      ImageId: ami-0d803519bc74364e7
+      ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
+      NetworkInterfaces:
+         - AssociatePublicIpAddress: "true"
+           PrivateIpAddress: '10.1.1.22'
+           DeviceIndex: "0"
+           GroupSet:
+             - Ref: OHcnappPublicSG
+           SubnetId: 
+            Ref: OHcnappPublicSubnet
+      KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker run --name vulnerable_jenkins_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:jenkins_image
+      Tags:
+        - Key: Name
+          Value: "OHcnappEC2Workload02"
+        - Key: platform
+          Value: "lab"
+          
+  OHcnappEC2Workload03:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+#      ImageId: ami-0d803519bc74364e7
+      ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
+      NetworkInterfaces:
+         - AssociatePublicIpAddress: "true"
+           PrivateIpAddress: '10.1.1.23'
+           DeviceIndex: "0"
+           GroupSet:
+             - Ref: OHcnappPublicSG
+           SubnetId: 
+            Ref: OHcnappPublicSubnet
+      KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker run --name vulnerable_tomcat_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:tomcat_image
+      Tags:
+        - Key: Name
+          Value: "OHcnappEC2Workload03"
+        - Key: platform
+          Value: "lab"
+
+  OHcnappEC2Workload04:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+#      ImageId: ami-0d803519bc74364e7
+      ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
+      NetworkInterfaces:
+         - AssociatePublicIpAddress: "true"
+           PrivateIpAddress: '10.1.1.24'
+           DeviceIndex: "0"
+           GroupSet:
+             - Ref: OHcnappPublicSG
+           SubnetId: 
+            Ref: OHcnappPublicSubnet
+      KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker run --name end_of_life_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:end_of_life_ubuntu2110_image
+      Tags:
+        - Key: Name
+          Value: "OHcnappEC2Workload04"
+        - Key: platform
+          Value: "lab"
+
+  OHcnappEC2Workload05:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+#      ImageId: ami-0d803519bc74364e7
+      ImageId: !Ref LatestAmiId
+      IamInstanceProfile: !Ref OHcnappEC2InstanceProfile
+      NetworkInterfaces:
+         - AssociatePublicIpAddress: "true"
+           PrivateIpAddress: '10.1.1.25'
+           DeviceIndex: "0"
+           GroupSet:
+             - Ref: OHcnappPublicSG
+           SubnetId: 
+            Ref: OHcnappPublicSubnet
+      KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker run --name malicious_xmrig_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:xmrig_image
+      Tags:
+        - Key: Name
+          Value: "OHcnappEC2Workload05"
+        - Key: platform
+          Value: "lab"
+
+
   OHcnappKeyPair:
     Type: 'AWS::EC2::KeyPair'
     Properties:
@@ -536,26 +711,31 @@ Resources:
     Properties:
       RouteTableId: !Ref OHcnappRouteTable
       SubnetId: !Ref OHcnappPublicSubnet
-       
+
+
+
 Outputs:
+
   ExternalId:
     Value:  !Select [2, !Split [ '/', !Ref  AWS::StackId]]
+
+
 Mappings:
   RegionMap:
-#    us-east-1:
+    us-east-1:
 #      GUACAMI: ami-00ebca77849e4072b
 #      W10AMI: ami-00b386e7d7fb65fdc
-#      AAAMI: ami-0f6ee6ba26a44b0f7
-    us-east-2:
+       AAAMI: ami-07b2e9a59dfd14005
+#    us-east-2:
 #      GUACAMI: ami-0ec5f7389fb01598b
 #      W10AMI: ami-06540a8b6d12df1ea
-      AAAMI: ami-0a7fa328337f5020b
-    us-west-2:
+#      AAAMI: ami-0a7fa328337f5020b
+#    us-west-2:
 #      GUACAMI: ami-0bf18ec307863dcc5
 #      W10AMI: ami-002a07f4f7c694d11
-      AAAMI: ami-06448b8505d6cf29c
-    us-west-1:
+#      AAAMI: ami-06448b8505d6cf29c
+#    us-west-1:
 #      GUACAMI: ami-034bffbf234a264e9
 #      W10AMI: ami-00a9d9ce4c6db5313
 #
-      AAAMI: ami-05a0e4e5aafb17026
+#      AAAMI: ami-05a0e4e5aafb17026
