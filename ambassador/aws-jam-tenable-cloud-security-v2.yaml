@@ -10,7 +10,7 @@ Parameters:
     Type: String
     Default:  lab
   Author:
-    Description: Author (should be meta data)
+    Description: Author 
     Type: String
     Default: rdevera@tenable.com
   Version:
@@ -20,12 +20,11 @@ Parameters:
   WinDTUsername:
     Description:  Username for Windows Desktop
     Type: String
-    Default: john
+    Default: johndoe
   WinDTPassword:
     Description: Password for Windows Desktop
     Type:  String
-    Default: Tenable.One
-  # Use public Systems Manager Parameter
+    Default: cleartextsecretpassword
   LatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
