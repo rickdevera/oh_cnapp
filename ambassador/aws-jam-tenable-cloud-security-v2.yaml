@@ -353,8 +353,11 @@ Resources:
         - IpProtocol: "-1"
           FromPort: 0
           ToPort: 0
-          CidrIp: 10.0.0.0/8
+          CidrIp: 0.0.0.0/0
       VpcId: !Ref OHcnappVPC
+      Tags:
+        - Key: Name
+          Value: OHcnappPublicSG
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 378900f8-dfab-4a33-9496-c1ef74c8516b
@@ -384,6 +387,9 @@ Resources:
           ToPort: 0
           CidrIp: 0.0.0.0/0
       VpcId: !Ref OHcnappVPC
+      Tags:
+        - Key: Name
+          Value: OHcnappWinDemoSG
 
   OHcnappPrivateSG:
     Type: 'AWS::EC2::SecurityGroup'
@@ -411,7 +417,7 @@ Resources:
         - IpProtocol: "-1"
           FromPort: 0
           ToPort: 0
-          CidrIp: 10.1.0.0/16
+          CidrIp: 0.0.0.0/0
       VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
@@ -503,7 +509,7 @@ Resources:
         - IpProtocol: "-1"
           FromPort: 0
           ToPort: 0
-          CidrIp: 10.3.0.0/16
+          CidrIp: 0.0.0.0/0
       VpcId: !Ref OHcnappVPC
       Tags:
         - Key: Name
@@ -565,7 +571,7 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
-          yum install -y docker
+          sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
           docker run --name log4shell_vulnerable_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:log4shell_image
@@ -595,7 +601,7 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
-          yum install -y docker
+          sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
           docker run --name vulnerable_jenkins_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:jenkins_image
@@ -625,7 +631,7 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
-          yum install -y docker
+          sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
           docker run --name vulnerable_tomcat_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:tomcat_image
@@ -655,7 +661,7 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
-          yum install -y docker
+          sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
           docker run --name end_of_life_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:end_of_life_ubuntu2110_image
@@ -685,7 +691,7 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
-          yum install -y docker
+          sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
           docker run --name malicious_xmrig_container -d -p 80:80 public.ecr.aws/i3j2g7c0/cnappgoat-images:xmrig_image
