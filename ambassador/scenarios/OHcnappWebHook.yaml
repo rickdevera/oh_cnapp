@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Oh CNAPP WebHook Integration Template
+Parameters:
+  ProjectName:
+    Description: Project Name (like workshop, immersionday, awsjams)
+    Type: String
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
+  Author:
+    Description: Author (should be meta data)
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v1
+Resources:
+  WebhookLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt OHcnappWebhookLambdaExecutionRole.Arn
+      Runtime: python3.8
+      Code:
+        ZipFile: |
+          import json
+          def lambda_handler(event, context):
+              print("Received event:", event)
+              body = json.loads(event['body'])
+              response = {
+                  'statusCode': 200,
+                  'body': json.dumps({'message': 'Data received'}),
+                  'headers': {'Content-Type': 'application/json'}
+              }
+              return response
+
+  OHcnappWebhookLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      Policies:
+        - PolicyName: LambdaPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: ["logs:*"]
+                Resource: "arn:aws:logs:*:*:*"
+
+  OHcnappWebhookApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: OHcnappWebhookApi
+
+  Resource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt OHcnappWebhookApi.RootResourceId
+      PathPart: webhook
+      RestApiId: !Ref OHcnappWebhookApi
+
+  Method:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId: !Ref Resource
+      RestApiId: !Ref OHcnappWebhookApi
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WebhookLambda.Arn}/invocations
+
+Outputs:
+  WebhookURL:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${OHcnappWebhookApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/webhook"
