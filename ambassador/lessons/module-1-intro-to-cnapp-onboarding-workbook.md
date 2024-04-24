@@ -31,23 +31,28 @@ This document outlines test scripts designed as a startup guide:
 ## Test Steps
 
 ### 1.  Onboaording AWS 
+Instructor will walk you through the steps for adding an account to AWS.
+
 
 [Reference - Onboard an Account](https://docs.ermetic.com/v1/docs/onboard-aws#onboard-an-account)
 
 1.  `Login` on to Tenable Cloud Security (https://cloud.tenable.com/
+1.  `Select` **Sign in via SSO** in the login window.
 1.  `Select` to the **Tenable Cloud Security** menu tile
+
+
 1.  Connect to AWS account  
     1.  `Navigate` to the left menu
     1.  `Select` **Accounts->AWS**
-    1.  `Click` on **Add Account**
-    1.  `Type` in a Name of the Account (ie.  **AWSDemoAccount**)
+    1.  `Click` on '+' icon and `Select` **Add Account**
+    1.  `Type` in a Name of the Account (ie.  **ambassador-ro**)
+    1.  `Select` **AWS Partition->Public**
     1.  `Click` on **Active Regions** pull-down menu and 
         1.  `Select`  **us-east-1, us-east-2, us-west-1, and us-west-2**
         1.  Leave other selections blank
     1.  `Click` on **Next**
     1.  `Enable` the following features
         1.  Monitoring (read-only)
-        1.  Remediation (read-write)
         1.  EC2 Instance Scanning
         1.  ECR Scanning
     1.  `Click` on **Next**
@@ -55,7 +60,8 @@ This document outlines test scripts designed as a startup guide:
         1.  `Click` on **click here**
     This will generate the Cloud Formation Template with the proper IAM roles and permissions to connect with Tenable Cloud Security and guide you to **Create** a Cloud Formation stack.
     (ie.  **CloudFormation->Stacks->Create Stack**)
-
+____
+##### On AWS Console
     1.  If you haven't done so already, `Login` to the AWS Console.
     1.  In the <u>AWS Console</u>  
         1.  `Verify` the parameters
@@ -64,6 +70,9 @@ This document outlines test scripts designed as a startup guide:
         1.  `Click` on **Create Stack**
         1.  When completed `Click` on **Outputs**
         1.  `Copy/record` the **Role ARN**
+_____
+##### On Tenable Cloud Security Console
+
     1.  On the <u>Tenable Cloud Security</u> dashboard
         1.   `Paste` the **Role ARN** from the step above.
         1.  `Click` on **Next** to complete
@@ -123,17 +132,15 @@ Navigate to different areas of the dashboard for familiarization, learn to filte
 
 
 
-####  Manipulating Data
-
+####  Learning to Fileter and Search for Data
 
 
 ##### Inventory Search Bar
 
 1.  Use the **search bar** above the dashboard to find resource across your entire multi-cloud environment
-1.  `Enter` the text  **CNAPPgoat**  
-1.  `Click` on **IAM Users**
-1.  Note the list of IAM Users displayed for that *Resource type*
-1.  
+1.  `Enter` the text  **ohcnapp**  
+1.  `Click` on **IAM Roles**
+1.  Note the list of IAM Roles displayed for that *Resource type*
 
 ##### Filtering Data
 
@@ -142,12 +149,23 @@ Navigate to different areas of the dashboard for familiarization, learn to filte
    1.  `Click` on **Severity** and `Select` **Critical and High**  
       Note:  **Severity**  is fully explained in this [link](https://docs.ermetic.com/v1/docs/en/navigate-the-console#colorcoded-risk-severity)
    1.  Note this displays all *findings* with the *Severity* level selected.
+
+###### Excluding Findings  (DO NOT EXCLUDE FINDINGS in this LESSSON)
+
 1.  You can also ***exclude** the types of findings
+    1.  `Click` on the **Category** filter and `Select` **IAM**
+    1.  `Expand` one of the *Policies** (ie *Overprivileged IAM Role)
+    1.  `Rollover` the mouse to one of the rows
+    1.  `Click` on the 3-dot menu
+    1.  DO NOT PERFORM THIS STEP IN THE CLASSROOM EXERCISE
+        1.  To exclude, select the **Exclude menu**   
 
-1.  `Click` on the link below to learn how to  filter the data throughout in the console to find specific resources, activities, and other types of data.
 
-`Click` on this [link](https://docs.ermetic.com/docs/filter-data#filter-data-in-tables) for additional information on filtering data.
+1.  `Click` on the link below to for addidtional modules how to  filter the data throughout in the console to find specific resources, activities, and other types of data.
+
+
+1.  `Click` on this [link](https://docs.ermetic.com/docs/filter-data#filter-data-in-tables) for additional information on filtering data.
 
 #### Challenge Questions
 
-none
+1  In the Findings tab, name three filters that you could enable to find  find a misconfigured policy named:  *Password reuse policy does not meet minimum requirements*
