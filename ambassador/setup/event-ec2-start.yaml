@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation template for Lambda function with a scheduled EventBridge rule
-
+Parameters:
+  BaseRegionCheck:  !Equals
+    - !Ref "AWS::Region"
+    - us-east-1
+    
 Resources:
   # Lambda Function
   OHcnappLambdaFunction:
@@ -88,6 +92,7 @@ Resources:
   # Permission for EventBridge to invoke the Lambda Function
   OHcnappLambdaPermission:
     Type: 'AWS::Lambda::Permission'
+    Condition:  BaseRegionCheck
     Properties:
 #      FunctionName: !GetAtt 'OHcnappLambdaFunction.FunctionName'
       FunctionName: !Ref OHcnappLambdaFunction
