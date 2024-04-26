@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for creating a role and attaching policies
+
+Resources:
+  OHcnappRole001:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "OHcnappRole001"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      
+  OHcnappNewPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          # First version allowing some actions
+          - Effect: 'Allow'
+            Action:
+              - "*"
+            Resource:
+              - "*"
+      ManagedPolicyName: "OHcnappNewPolicy"
+  OHcnappPolicyVersion:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: 'MyManagedPolicyWithVersion'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          # Second version that denies some actions
+          - Effect: 'Deny'
+            Action:
+              - 's3:DeleteObject'
+            Resource:
+              - 'arn:aws:s3:::example-bucket/*'
+      Roles:
+        - !Ref 'OHcnappRole001'
