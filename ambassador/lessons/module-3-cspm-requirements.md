@@ -179,7 +179,7 @@ Customer has recently expanded its cloud infrastructure to utilize services from
 
         1.  There are many ways to achieve this:
 
-            1.  **If you have only 5 minutes:**
+            1.  <b><u>f you have only 5 minutes:**</u></b>
 
                 1.  From the Dashboard, `Scroll` down to find the **If you only have 5 minutes**  
                 - This widget displays allows you you to focus on the most serious issues or if timing is critical, use this list to assess and remediate the highest priority findings in your environment.
@@ -193,10 +193,31 @@ Customer has recently expanded its cloud infrastructure to utilize services from
                 1.  `Click` on the **STAR** icon to the far right and highlight the star for all.
 
                 - this will display only findings tagged with the **star**
-            1.  **Toxic Combinations**
+
+            1.  **Labels**
+                1.  Must be Administrator to perform this.
+                1.  `Click` on **Settings**
+                1.  `Click` on **Inventory**
+                1.  `Click` on **Tag** and `Create` a **Manual** lable
+                1.  `Name` the label **Toxic Combinations**
+                
                 1.  `Click` on **Dashboard** from the left-menu
                 1.  `Scroll` down to view the **Toxic Combination** widget.
                 1.  `Click` on one of the **Findings**
+                1.  `Click` one of the listed items.
+                1.  `Click` on the **triple** dot icon on the far rigt next to the list of labels.
+                1.  `Add` the label to the resource.
+                    - this will label all resources associated with the entry.  
+                1.  From the **Settings** menu, click on **Automations**
+                1.  `Add` a rule with the following
+                    - Label **Toxic Combinations** 
+                    - Severity: Medium
+                    - Email address.
+                
+            1.  <b><u>Toxic Combinations</u></b>
+                1.  `Click` on **Dashboard** from the left-menu
+                1.  `Scroll` down to view the **Toxic Combination** widget.
+                1.  `Click` on the Findings to drill down
 
 
 
