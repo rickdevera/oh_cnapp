@@ -23,7 +23,7 @@
 
 ### Scenario:
 
-Acme Corp has recently expanded its cloud infrastructure to utilize services from AWS, Azure, and GCP to enhance scalability and redundancy. However, this multi-cloud strategy has led to complexity in managing security postures and ensuring compliance with various standards. They need a CSPM solution that provides comprehensive visibility and control over their cloud environment.  Below are the customer requirements. <sup>(AI Generated)</sup>
+Customer has recently expanded its cloud infrastructure to utilize services from AWS, Azure, and GCP to enhance scalability and redundancy. However, this multi-cloud strategy has led to complexity in managing security postures and ensuring compliance with various standards. They need a CSPM solution that provides comprehensive visibility and control over their cloud environment.  Below are the customer requirements. <sup>(AI Generated)</sup>
 
 #### Customer Requirements:
 
@@ -35,7 +35,7 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
     1. A contextual dashboard that categorizes resources by type for better analysis.
     1. Identification of resource ownership to enforce accountability.
     1. Visualization of network exposure to assess external access risks.
-    1. Insights into federated identity providers like Azure AD and Okta for identity and access management.
+    1. Insights into federated identity providers like PingIdentity, Azure AD, Okta for identity and access management.
 
 ##### Misconfigurations
 
@@ -56,12 +56,25 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
     1. Creation and filtering of findings by custom compliance standards set by Acme Corp.
     1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
 
-#### Steps to meet the requirements
+#### Steps to demo the requirements
 
 1.  A complete inventory of their cloud assets across AWS, Azure, and GCP.
-    1.  From the Dashboard, `Click` on **IAM Resources** in one of the widges.  The display should look similiar to this
-    <img src=../images/multi-account-inventory.png>
-    [!Note]:  This also meets the requirement for a contextual dashboard that categorizes resources by type...
+    - The Dashboard can be used to:
+        - Provide a quick, high-level overview of important activities for corporate executives.
+        - Allow security professionals to easily monitor and remediate their security state by drilling down into relevant issues.
+
+    1.  From the Dashboard,
+        1.  `Click` on the top right, the pulldown list for **All Accounts**.   
+        1.  `Verify` that all accounts are selected. 
+    1.  From the Dashboard,
+        1.  `View` the Asset Inventory organized by resource category
+        1.  `Click` on each resource category
+        1.  `Click` on the resource  type to list of resources found.
+
+
+    1.  **Validation Question:**
+        1.  How would you view the inventory of a specific cloud account?
+        1.  How many assets are found under **IAM Roles**?
 
 1.  Detailed visibility into the metadata and relationships of those resources. 
     1.  From the Dashboard, `Click` on **Compute Resources->EC2 Instance**
@@ -70,17 +83,33 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
         1.  `Click` on the **name* of the EC2 Instance.
         1.  Under the **Overview** tab, the relationships and metadata will be displayed under the **General** heading.
         1.  `Scroll` down and review **Created by**, **Availability Zone**, and **Role** 
+    1.  **Validation Question**
+        1.  Which IAM role is assigned to the EC2 instance?
+        1.  How was this resource created?
 
 1.  The ability to search and filter across clouds for quick access to specific data points.
     1.  From the Dashboard, 'Click' on the **Search Bar** on the top of the dashboard
         1.  `Enter`  the string **EC2** 
         1.  This will search and display across all accounts.  
-        *Note*: This displayes all accounts configured during the onboard process.  
+        *Note*: This displays all accounts configured during the onboard process.  
+        1.  `Click` on **EC2 Instances**
+    1.  Validation Question:
+        1.  How many Lambda functions were found with the name **OHcnapp**?
+
 1.  A contextual dashboard that categorizes resources by type for better analysis.
-    1.  `Select`  **Dashboard** left menu item
-    1.  `Scroll` through the dashboard and validate all catagories found.
+    1.  Two methods
+        1.  Dashboard
+            1.  `View` the Dashboard widget
+            1.  `View` the Asset Inventory widget which displays all resource categories.
+            1.  `Scroll` through the dashboard and validate all catagories found.
+
+        1.  Inventory view    
+            1.  `Click` on **Inventory** from the *left menu*
+
+
 1.  Identification of resource ownership to enforce accountability.
     1.  See Steps above
+    1.  
 1.  Visualization of network exposure to assess external access risks.
     1.  From the Dashboard, `Select` the tile **Compute Resources->EC2 Instances**
         1.  From the filter bar
@@ -88,30 +117,35 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
             1.  `Select` **Network Exposure Scope->All IPs**
             1.  `Select` the **EC2** Instance
             1.  `Select` the **Network** menu
-            [!Note] The graph view
+            1.  `Study` The graph view
+
+    1.  Validation Question:
+        1.  Which EC2 images have **Indirect** access?
+        1.  Which resources is providing the **direct** access?
+
 1.  Insights into federated identity providers like Azure AD and Okta for identity and access management. (optional if using federated identity)
+    1.  In this environment federated access is going through <u>Tenable One</u>, 
     1.  From the Left Menu, `Select` **IAM->Federated Identity Permissions**  
 
 1.  A robust mechanism to detect and alert on misconfigurations across various cloud resources.
-    Tenable Cloud Security brings together large volumes of activity data from multiple sources, making it easy to monitor and audit cloud activity based on this data.  
-  
-    Tenable then uses this data to simplify in-depth cloud detection and response (CDR) by monitoring and reporting on suspicious or unusual activity across your entire multi-cloud environment. By creating a behavioral baseline for each identity captured across cloud provider log trails, the platform detects and turns anomalous findings into contextualized, risk-prioritized alerts that allow you to detect and respond to anomalies.  
+    1.  These steps will be instructor lead as settings are not available through users with Collaborator access.  The lab is configured to send alerts by setting up an Automation rule and can also be sent other integration methods such as a SEIM or Webhooks.
+       
 
-    Leveraging advanced analytics and granular visibility on access, entitlement, and infrastructure configuration changes, Tenable simplifies incident response and investigation. Upon identifying unusual identity behavior, Tenable flags it and identifies the root cause.
     
     1.  If you were searching for activity from a user (demogoat) whose been making unusual to the system.
 
         1.  `Click` on **Activity Log** from the **Left-Menu**
-        1.  `Click` on the *filter* **Identify**
+        1.  `Click` on the *filter* **Identity**
         1.  `Enter` **demogoat* in the search field
         1.  `Click` on the *filter* **Resources**
         1.  `Enter` **cnappgoat-http-bucket** in the *search field*
         1.  `Select` the entry for cnappgoat-http-bucket  
         
-        This will show the activities associated for a resource.  This can also be done by selecting the resources and selecting Activities in the widget.
+        - This will show the activities associated for a resource.  This can also be done by selecting the resources and selecting Activities in the widget.  
 
-    1.  Another method is to automatically recieve notifications, follow the steps below:
-    
+    1.  Another method is to automatically recieve notifications, follow the steps below:  
+        1.  To setup follow the steps outline in this link [Integrations and Automations](https://docs.ermetic.com/docs/integrations-and-automations)
+
 
         1.  From the **Bottom-Left Menu**, `Click` on **Settings**,
         1.  `Select` **Automations->Policies**
@@ -145,12 +179,12 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
 
         1.  There are many ways to achieve this:
 
-            1.  If you have only 5 minutes:
+            1.  **If you have only 5 minutes:**
 
                 1.  From the Dashboard, `Scroll` down to find the **If you only have 5 minutes**  
                 - This widget displays allows you you to focus on the most serious issues or if timing is critical, use this list to assess and remediate the highest priority findings in your environment.
 
-            1.  Customized method (tagging)
+            1.  **Customized method (tagging)**
 
                 1.  `Select` **Findings** from left menu
                 1.  `Filter` on **Network**
@@ -159,13 +193,21 @@ Acme Corp has recently expanded its cloud infrastructure to utilize services fro
                 1.  `Click` on the **STAR** icon to the far right and highlight the star for all.
 
                 - this will display only findings tagged with the **star**
+            1.  **Toxic Combinations**
+                1.  `Click` on **Dashboard** from the left-menu
+                1.  `Scroll` down to view the **Toxic Combination** widget.
+                1.  `Click` on one of the **Findings**
+
 
 
     1.  Monitoring for any publicly exposed or shared resources to prevent unintended data leaks.
-        1.  From the **Dashboard**, `Scroll` to the **Findings** widget.
+        1.  From the left menu, `Click` on **Inventory** widget.
         1.  `Click` on the **Data** category
-        1.  `Expand` each entry to view the details of the **Policy** violation
-        1.  `Click` on a **Policy Violation** and view the details and remediation recommendations.
+        1.  `Select` **S3 Buckets**
+
+        1.  Validation Question:
+            1.  Which buckets are listed as **Public**?
+
 
     1.  Alerts for any unencrypted data stores which could pose a risk of data breaches.
         
