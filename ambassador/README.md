@@ -12,6 +12,9 @@ Product:  Tenable Cloud Security
 
 To equip architects with the skills and knowledge necessary to become Tenable Cloud Security Champions.  The primary goal is to effectively implement and manage the Tenable Cloud Security Solution within a Cloud Native Application Protection Platform (CNAPP) framework, focusing on multi-cloud environments (AWS, Microsoft Azure, and GCP). The training will cover critical components such as Cloud Workload Protection (CWPP), Cloud Infrastructure Entitlement Management (CIEM), Cloud Security Posture Management (CSPM), Cloud Detection and Response (CDR), Infrastructure as Code (IaC) Security, Kubernetes Security Posture Management (KSPM), and Just In Time (JIT) Access.
 
+##  Scenarios
+Assume each module to have a customer scenario and list of requirements document.  To acheive success, architect/engineer can use this checklist to demo every requirement met for the customer in the training module.  
+
 ## Target Audience: 
 Partner architects and cloud security professionals looking to learn the Tenable Cloud Security solution.
 
