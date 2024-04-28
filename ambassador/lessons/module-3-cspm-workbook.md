@@ -123,9 +123,10 @@ Customer has recently expanded its cloud infrastructure to utilize services from
         1.  Which EC2 images have **Indirect** access?
         1.  Which resources is providing the **direct** access?
 
-1.  Insights into federated identity providers like Azure AD and Okta for identity and access management. (optional if using federated identity)
-    1.  In this environment federated access is going through <u>Tenable One</u>, 
-    1.  From the Left Menu, `Select` **IAM->Federated Identity Permissions**  
+1.  Insights into federated identity providers like PingIdentity, Azure AD and Okta for identity and access management. (optional if using federated identity)
+    1.  In this environment federated access is going through <u>Tenable One</u>.  For this demo lab, console access to Tenable Cloud Security is setup through <u>TenableOne</u>.  with SSO access to Cloud Security using TenableOne.
+    1.  Setting up Federated IDP is covered in the Advanced (Elective) Training Module
+    1.  To demonstrate, log off
 
 1.  A robust mechanism to detect and alert on misconfigurations across various cloud resources.
     1.  These steps will be instructor lead as settings are not available through users with Collaborator access.  The lab is configured to send alerts by setting up an Automation rule and can also be sent other integration methods such as a SEIM or Webhooks.
