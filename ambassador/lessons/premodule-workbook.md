@@ -1,4 +1,4 @@
-# Tenable Cloud Security Lab Bootcamp Workbootk
+# Tenable Cloud Security Lab Bootcamp Workboot
 
 This workshop is design to provide you familiarization and hands-on experience with Tenable Cloud Security.  
 
@@ -16,7 +16,7 @@ This workshop is design to provide you familiarization and hands-on experience w
 ### Getting Started
 #### Initial Training
 
-1.  `Register` at [Tenable Community](http://community.tenble.com) for acess to **Tenable University**
+1.  `Register` at [Tenable Community](http://community.tenble.com) for access to **Tenable University**
 1.  After completing registration, `Goto` **Tenable Univeristy** from the login portal.
 1.  `Select` and `Complete` the courseware  title <u><b>Introduction to Tenable Cloud Security</b></u>
 

@@ -1,6 +1,23 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: CloudFormation template for creating a role and attaching policies
-
+Parameters:
+  ProjectName:
+    Description: Project Name (like workshop, immersionday, awsjams)
+    Type: String
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
+  Author:
+    Description: Author 
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v1
+    
 Resources:
   OHcnappRole001:
     Type: AWS::IAM::Role

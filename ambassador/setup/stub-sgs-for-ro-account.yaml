@@ -1,4 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
 Resources:
   # Creating 20 security groups with Fn::ForEach
   MySecurityGroups:

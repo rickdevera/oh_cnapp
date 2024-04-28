@@ -1,6 +1,24 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: CloudFormation template to create 10 security groups in the default VPC
 
+Parameters:
+  ProjectName:
+    Description: Project Name (like workshop, immersionday, awsjams)
+    Type: String
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
+  Author:
+    Description: Author 
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v1
+    
 Resources:
   SecurityGroup001:
     Type: "AWS::EC2::SecurityGroup"

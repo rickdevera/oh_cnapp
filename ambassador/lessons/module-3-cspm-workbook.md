@@ -5,8 +5,6 @@
 
 ## Introduction
 
-
-
 ### Test Environment
 
 - **Cloud Provider(s):** AWS  
@@ -47,13 +45,12 @@ Customer has recently expanded its cloud infrastructure to utilize services from
     1. Identification of outdated or insecure network communication channels.
     1. Detection of exposed secrets and a lack of key rotation which could lead to compromised credentials.
     1. Custom policy creation to enforce specific security postures.
-    1. Special attention to misconfigurations in identity providers.
     1. Automatic categorization of findings to streamline remediation processes.
 
 ##### Compliance
 
     1. Compliance checks against industry standards and best practices, including CIS Benchmarks.
-    1. Creation and filtering of findings by custom compliance standards set by Acme Corp.
+    1. Creation and filtering of findings by custom compliance standards set by the customer
     1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
 
 #### Steps to demo the requirements
@@ -123,15 +120,13 @@ Customer has recently expanded its cloud infrastructure to utilize services from
         1.  Which EC2 images have **Indirect** access?
         1.  Which resources is providing the **direct** access?
 
-1.  Insights into federated identity providers like PingIdentity, Azure AD and Okta for identity and access management. (optional if using federated identity)
+1.  Insights into federated identity providers like PingIdentity, Azure AD, and Okta for identity and access management. (optional if using federated identity)
     1.  In this environment federated access is going through <u>Tenable One</u>.  For this demo lab, console access to Tenable Cloud Security is setup through <u>TenableOne</u>.  with SSO access to Cloud Security using TenableOne.
     1.  Setting up Federated IDP is covered in the Advanced (Elective) Training Module
-    1.  To demonstrate, log off
+    1.  To demo this setup an IDP with AWS Identity Access Center
 
 1.  A robust mechanism to detect and alert on misconfigurations across various cloud resources.
     1.  These steps will be instructor lead as settings are not available through users with Collaborator access.  The lab is configured to send alerts by setting up an Automation rule and can also be sent other integration methods such as a SEIM or Webhooks.
-       
-
     
     1.  If you were searching for activity from a user (demogoat) whose been making unusual to the system.
 
@@ -242,21 +237,31 @@ Customer has recently expanded its cloud infrastructure to utilize services from
     1.  Identification of outdated or insecure network communication channels.
 
         1.  From the **Dashboard**, `Scroll` to the **Findings** widget
-        1.  `Click` on the **Network** category
+        1.  `Click` on the Category filter and select the **Network** category
         1.  `Select` **Policy**
         1.  `Search` for **Unused** in the search box.
         1.  `Select`  **Unused security group**
         1.  `Expand` to **Drill** down to view the details of the **Policy** violation
         1.  `Click` on any entry to view the details and remediation recommendations.
+        1.  `Click` on **Findings**
+        1.  `Click` on the **Policy** filter and `type` in the filter **Traffic**
+    
+        1.  Validation Question:  
+            1.  Which resource is failed the polcy for *Unencrypted S3 Bucket Traffic*?
     
     1.  Detection of exposed secrets and a lack of key rotation which could lead to compromised credentials.
 
         1.  From the **Dashboard**, `Scroll` to the **Findings** widget.
         1.  `Click` on the **Data** category
         1.  `Select` **Policy**
-        1.  `Search` for **rotation**
-        1.  `Click` on **Select matches**
-        1.  `Expand` each entry to drill down into the details 
+        1.  `Search` for **KMS**
+        1.  `Click` on **KMS key automatic key rotation is not enableds**
+        1.  `Click` on the entry to drill down into the details
+        1.  `Click` on the key and review the details.
+
+        1.  Validation Question:
+            1.  Other than the remediation steps provided, what can be done to ensure *Automatic key rotation* is enabled?
+
 
     1.  Custom policy creation to enforce specific security postures.
 
@@ -270,8 +275,6 @@ Customer has recently expanded its cloud infrastructure to utilize services from
         1.  `Select` **Done** button.
         1.  `Expand` the **Custom Policy** category
 
-    1.  Special attention to misconfigurations in identity providers.
-
     1.  Automatic categorization of findings to streamline remediation processes
 
         1.  From the Dashboard, note the Dashboard widgets contain an Organization view and you can click the tiles or categories and drill down into each widget.  
@@ -283,41 +286,48 @@ Customer has recently expanded its cloud infrastructure to utilize services from
         [Reference:  Asset Inventory (online docs)](https://docs.ermetic.com/docs/view-your-asset-inventory)
 
     1.  Compliance and Reporting Requirements
-        1.  Compliance checks against industry standards and best practices, including CIS Benchmarks.
-
-
-        1. Creation and filtering of findings by custom compliance standards set by the company.
-
-        1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
-
-            ###### Steps
+        1.  Compliance checks against industry standards and best practices (ie AWS Well Architected, NIST 800-171, etc).
 
             1.  From the Dashboard, `Scroll` down to view the **Compliance** widget.  
                 1.  `Select` from the list, **Last 7 days** to view the compliance score from the last 7-days.
                 1.  `Select` **Compliance** from the left-menu.
-                1.  `Expand` **CIS CCM 4.0.2**.
-                1.  `Select` and `Expand` a category to view the policies and the failed resources.
-            1.  From the left-menu, `Click` on **Findings**
-                1.  `View` the filter bar and verify if **Compliances** is one of the avaliable filter options.
-                    1.  If not, `Click` on the **+** symbol and `Select` **Compliances**
-                1.  `Select` **Compliances** and `Choose` **CSA CCM 4.0.2**
-                1.  `Select` the download symbol on the top right side *(indicated by down arror and underscore)*
-                1.  `Choose` **Export** and save to local directory.
+                1.  `Expand` **Tenable Best Practices**.
+                1.  `Expand` to drill down and uncover passed/failed policies.  
+
+        1. Creation and filtering of findings by custom compliance standards set by the company.      
+        - These steps will create custom compliane reports.  Be sure the names are unique.
+
+            1.  From the left-menu, `Select` **Compliance**
+                1.  `Click` on the **+** (plus) icon on the top right side of the dashboard.
+                1.  `Enter` a unique name (ie.  **Ambassador-<username>** 
+                1.  `Click` on **Select specific policies**
+                1.  `Expand` the **IAM** category
+                1.  `Select` **Filter->Severity**
+                1.  `Click` on **Critical** and **High**
+                1.  `Select` all policy options
+                1.  `Click` on **Done** to save the configuration
+                1.  After a few seconds, the custom compliance standard will be display.  
+                1.  `Expand` the new compliance report to view scores on each policy.
+
+
+        1. Availability of built-in reports in formats like CSV and PDF, as well as custom and scheduled reporting capabilities.
+
             1.  From the left-menu, `Select` **Reports**
                 1.  `Click` on the **New Reports** button (top-right)
-                1.  `Select` the **Compliance Report**  from the pull-down list.
-                1.  `Select` **CIS CCM 4.0.2** as the Compliance type from teh pull-down list.
+                1.  `Select` the **Compliance** Report  from the pull-down list.
+                1.  `Select` **Tenable Best Practices** as the Compliance type from teh pull-down list.
                 1.  `Choose` **PDF** or **CSV**
                 1.  `Select` **Schedule**
                 1.  `Enter` the **Delivery times**
                     1.  For example:  **Daily** at **12:00 AM** UTC
-                1.  `Enter` and emial address
+                1.  `Enter` and email address
                 1.  `Click` on **Schedule**
-                Your report is now schedule.
 
-#### Review Questions
+        1.   Validation Question
+            1.  Using the **Tenable Best Practices** *compliance reports*, how many resources violate the policies for **Traffic Encryption**?
+                
+            
 
-1.  Start Kahoot
 
 
 

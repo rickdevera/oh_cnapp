@@ -18,6 +18,7 @@ Parameters:
     Description: Version
     Type: String
     Default: v1
+    
 Resources:
   WebhookLambda:
     Type: AWS::Lambda::Function

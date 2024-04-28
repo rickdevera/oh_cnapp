@@ -4,6 +4,22 @@ Parameters:
   BaseRegionCheck:  !Equals
     - !Ref "AWS::Region"
     - us-east-1
+  ProjectName:
+    Description: Project Name (like workshop, immersionday, awsjams)
+    Type: String
+    Default: ambassador
+  Environment:
+    Description: Environment
+    Type: String
+    Default:  lab
+  Author:
+    Description: Author 
+    Type: String
+    Default: rdevera@tenable.com
+  Version:
+    Description: Version
+    Type: String
+    Default: v1
     
 Resources:
   # Lambda Function
