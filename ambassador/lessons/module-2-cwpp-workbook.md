@@ -34,7 +34,7 @@ Tenable Cloud Security leverages APIs to connect to your cloud workload and extr
 1.  `Click` on **Inventory** from the left menu.
 1.  `Click` on **Compute->EC2 Instances**
 1.  `Click` on any workload under the **Name** column.  (ie.  <u>OHcnappEC2Workload01</u>)
-1.  `Click` on the *triple* dot button and `Select` **Scan Now**
+1.  `Click` on the *vertical ellipses* button and `Select` **Scan Now**
     1.  This will create begin a scan without any agents installed on the workload.
 
 ###### Automatic Discovery

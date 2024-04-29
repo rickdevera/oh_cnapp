@@ -201,7 +201,7 @@ Customer has recently expanded its cloud infrastructure to utilize services from
                 1.  `Scroll` down to view the **Toxic Combination** widget.
                 1.  `Click` on one of the **Findings**
                 1.  `Click` one of the listed items.
-                1.  `Click` on the **triple** dot icon on the far rigt next to the list of labels.
+                1.  `Click` on the **vertical ellipses** icon on the far right next to the list of labels.
                 1.  `Add` the label to the resource.
                     - this will label all resources associated with the entry.  
                 1.  From the **Settings** menu, click on **Automations**
