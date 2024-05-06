@@ -83,10 +83,8 @@ Having a clear understanding of your cloud posture means you can continuously mo
 
 ###### Login to the Tenable Cloud Security Dashboard
 
-1.  `Login` into **https://us.app.ermetic.com**  *** (Instruction for credentials are found in the Prerequites section above) ***
-1.  On the **Top-Right**, `select` **All accounts** drop down and `choose` **AWS->Production Labs->awsjams** under the **Organization** hierarchy. 
+1.  `Login` into **https://cloud.tenable.com/** 
 
-    <u>***Note:  This must be selected when completing all tasks in this challenge.  If not, there maybe different validation results.*** </u>
 
 
 When you log into the Console, your Dashboard appears. The Dashboard provides a comprehensive overview of your cloud environment, giving you a snapshot of your asset count and security posture. It’s a great jumping off point for deeper investigation into potentially risky events and circumstances in your environment.  
@@ -114,7 +112,7 @@ Visibility and monitoring of IAM resources one of the key steps to securing your
         (See this <a href="https://docs.ermetic.com/docs/drill-down-into-resources" rel="nofollow">link</a> for detailed explanation)
 
     
-    1.  `Click` on the *kebab (three-vertical dot)* menu and `select` **Least Privilege Policies**
+    1.  `Click` on the *three dot ellipse* icon and `select` **Least Privilege Policies**
         1.    This feature is used to generate on-demand, fine-grained policies for AWS identities/resources that grant the minimum privileges needed to perform required tasks. 
 
         1.  Please note:   This step is <u>ONLY</u> used to walk through this feature, we will not generate policies.  See Generate Least Privilege Policy <a href="https://docs.ermetic.com/docs/generate-least-privilege-policies" rel="nofollow">link</a> for more details on generating a policy
