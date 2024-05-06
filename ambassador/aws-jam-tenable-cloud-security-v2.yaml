@@ -571,6 +571,25 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
+          yum install -y git cronie jq
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/5 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
+          # install vulnerable docker
+
           sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
@@ -580,6 +599,8 @@ Resources:
           Value: "OHcnappEC2Workload01"
         - Key: platform
           Value: "lab"
+        - Key: findings
+          Value: "log4shell"
 
   OHcnappEC2Workload02:
     Type: 'AWS::EC2::Instance'
@@ -610,6 +631,8 @@ Resources:
           Value: "OHcnappEC2Workload02"
         - Key: platform
           Value: "lab"
+        - Key: findings
+          Value: "jenkins"
           
   OHcnappEC2Workload03:
     Type: 'AWS::EC2::Instance'
@@ -640,6 +663,8 @@ Resources:
           Value: "OHcnappEC2Workload03"
         - Key: platform
           Value: "lab"
+        - Key:  findings
+          Value: "tomcat"
 
   OHcnappEC2Workload04:
     Type: 'AWS::EC2::Instance'
@@ -670,6 +695,8 @@ Resources:
           Value: "OHcnappEC2Workload04"
         - Key: platform
           Value: "lab"
+        - Key: findings
+          Value: "eol"
 
   OHcnappEC2Workload05:
     Type: 'AWS::EC2::Instance'
@@ -700,6 +727,8 @@ Resources:
           Value: "OHcnappEC2Workload05"
         - Key: platform
           Value: "lab"
+        - Key: findings
+          Value: "malicious"
 
 
   OHcnappKeyPair:
