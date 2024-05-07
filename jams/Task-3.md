@@ -7,7 +7,8 @@ Use Tenable Cloud Security to discover mulitple ways to uncover misconfiguration
 * Use the dashboard to uncover hard-to-spot **Toxic Combinations**.
 
 #### Prerequisites
-1.  On the **Top-Right**, `select` **All accounts** drop down and `choose` **AWS->Production Labs->awsjams** under the **Organization** hierarchy. 
+1.  On the **Top-Right**, `select` **All Accounts**.
+1.  `Select` the **ambassador-ou** accounts.
 
 
 #### Task Summary
@@ -28,18 +29,19 @@ Tenable Cloud Security reviews and interprets a wide range of compliance standar
 For the standard as a whole and for any high-level requirements, the percentage is calculated by averaging the percentages of all requirements related to the standard/high-level requirement.
 For individual requirements, the percentage is calculated in a weighted manner, factoring in the number of resources that are assessed by each policy related to the requirement.
 Note some standards are not displayed and cannot be selected due to the assigned role (***Viewer***) to the user.
+
+
 ##### AWS Well-Architected Standard
+
+- Use Case - Customer task is identify areas that meet the requiements for an AWS Well-Architected Review.
 
 1.  On the dashboard, go to the **left-menu** 
 1.  `Select` the **Compliance** icon/menu item (*checkbox*).
 1.  `Expand` **AWS Well Architected->Security** 
 1.  `Expand` **SEC 6 - How do you protect your compute resources?**
 1.  `Click` on **EC2 instance metadata service support insecure version**
-1.  `Expand` the **Compute** category
-1.  Under the **Policy** heading, `Click` on **EC2 instance metadata service supports insecure version**.
-1.  Note the explantion of this type of attack.  This was a <u>well-known attack</u> reported by a financial institution.
-1.  `Click` on the link, under the **Result** heading (For example:  <u>27 of 34 resources failed | 27 open findings</u>). 
-1.  Note the listing of all resources impacted by this policy which can be filtered by Accounts, Category, and/or Severity level.
+1.  In this case there were **XX** out of **XX** resources that were scanned and *failed*.
+
 
 You can also use the compliance reports to drill down into public EC2 instances with *Critical Vulnerabilties*
 
@@ -53,38 +55,25 @@ You can also use the compliance reports to drill down into public EC2 instances 
 1.  `Filter` **Severity** is **Critical**
 1.  Note the results
 
+#### IAM
 
-##### Custom Compliance Rules
+In a well-known case study of a financial institution, it was found that an EC2 instance was assigned  privileged access using an **assumed** IAM role.  In a large cloud deployment, the task for finding specific details for IAM is very cumbersome.  Below are some of the way do uncover the details across the entire AWS organization or an AWS account.
 
-You can also create custom out-of-the-box **Compliance rules** to monitor a specific set of policies that align with your organization’s goals. 
-For example:
-- Monitor organization-specific compliance rules
-- Track organizational projects that address a specific set of issues
-- Track hard-to-find *toxic combinations*.
+1.  Using **IAM->Intelligence**, filter for the following:
+    1.  Orginators:  **AWS Lambda**
+    1.  Permission Severity:  **Critical**
 
-
-1.  On the **Compliance** dashboard, `search` for **AWSJams Custom Policy**
-1.  `Expand` the compliance policy
-1.  Note the policies assigned to the custom organization policy.
-1.  This is another way to display findings for **EC2 instance has critical vulnerabilities**
-
-##### If you only have 5 minutes
-Resources and expertise is always a challenge for security organizations.  Tenable Cloud Security provides additional insights to help security teams uncover areas of high risk and provides widgets on the dashboard to <u>quickly</u> spot and monitor areas of risk.   
-
-For example:  On the main dashboard you can view **If you only have 5 minutes**. 
-
-1.  On the Dashboard, find the section **If you only have 5 minutes**
-    1.  If you’re short on time, or just want to focus on the most serious issues, use this list to assess and remediate the highest priority findings in your environment.  
-    1.  This is another way to discover vulnerable compute instances. 
-    1.  You drill down deeper on resolving the issues by `Clicking`` on a finding or its associated resource to review the  suggested **Remediations**.
-
-
-1.  There are many ways to quickly discover misconfigurations.  
-1.  There is also another widget quickly uncovers hard-to-spot, combination of misconfigured and vulnerable resources.
+1.  Using **Permissions Query**, `filter` for the following:
+    1.  Originators:  **AWS Lambda**
+    1.  Permission:  **sts:AssumeRole**  (Hint: *enter the string in search bar*)
+1.  `Click` on the role found
+1.  `Click` on the **IAM->Trust Relationship Policy** tab
+1.  Note the allowed services and the *Action* is an **sts:AssumeRole**
 
 
 ##### Validation Question
 
-1.  On the main dashboard, `enter` the <u>name</u> of the widget that displays the resources with multiple risks that, when combined, are both hard-to-spot 
-and pose a greater threat to your organization.
+
+1.  Search and Enter the name of a *role* that has a *permission severity* of  **critical**, that can **assume** and identity of an **Amazon EC2 instance**, and it Linked to a compute resource that is *labeled* **vulnerable**.
+
 

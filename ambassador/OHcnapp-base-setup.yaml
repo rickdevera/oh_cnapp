@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Oh CNAPP Demo Template
+Description: OH CNAPP BASE Demo Template
 Parameters:
   ProjectName:
     Description: Project Name (like workshop, immersionday, awsjams)
@@ -545,6 +545,28 @@ Resources:
            SubnetId: 
             Ref: OHcnappPublicSubnet
       KeyName: !Ref OHcnappKeyPair 
+      UserData:
+        Fn::Base64: |
+          #! /bin/bash
+          yum update -y
+          yum install -y git cronie jq
+          
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/5 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
       Tags:
         - Key: Name
           Value: "OHcnappPublicEC2"
@@ -572,8 +594,9 @@ Resources:
           #! /bin/bash
           yum update -y
           yum install -y git cronie jq
+
           # Define variables
-          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/.sh"
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
           LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
 
           # Download the script file from GitHub
@@ -622,6 +645,26 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
+          yum install -y git cronie jq
+
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/30 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
+          # install vulnerable docker
+
           sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
@@ -654,6 +697,26 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
+          yum install -y git cronie jq
+
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/30 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
+          # install vulnerable docker
+
           sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
@@ -686,6 +749,26 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
+          yum install -y git cronie jq
+
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/30 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
+          # install vulnerable docker
+
           sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
@@ -718,6 +801,26 @@ Resources:
         Fn::Base64: |
           #! /bin/bash
           yum update -y
+          yum install -y git cronie jq
+
+          # Define variables
+          GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+          LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
+
+          # Download the script file from GitHub
+          curl -o $LOCAL_SCRIPT_PATH $GITHUB_REPO_URL
+
+          # Make the downloaded script executable
+          chmod +x $LOCAL_SCRIPT_PATH
+
+          # Add a cron job to run the script every 30 minutes
+          (crontab -l 2>/dev/null; echo "*/30 * * * * $LOCAL_SCRIPT_PATH") | crontab -
+
+          # Start the crond service
+          service crond start
+
+          # install vulnerable docker
+
           sudo amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user

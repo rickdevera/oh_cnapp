@@ -2,7 +2,7 @@
 #### Goal:  Walk through the Findings Workflow
 
 #### Prerequisites
-1.  On the **Top-Right**, `select` **All accounts** drop down and `choose` **AWS->Production Labs->awsjams** under the **Organization** hierarchy. 
+1.  On the **Top-Right**, `select` **All accounts** drop down and `choose` **ambassador-lab** under the **training** hierarchy. 
 
 
 #### Task Summary
@@ -18,15 +18,15 @@ with **Critical** severity in an AWS production environment
 #### Tasks
 ##### Findings
 
-1.  From the Dashboard, `click` on  **Findings* menu item on the left (*Magnifying glass*)
-1.  On the top-right side of dashboard, `click` on the **Star** (icon) filter
+1.  From the Dashboard, `click` on  **Findings** menu item on the left-menu bar
+1.  On the top-right side of dashboard
 1.  `Filter` by **Critical** severity
 1.  `Filter` the **IAM** category
-1.  The result should  should display a listing,  **Inactive IAM role** with the resource named **OrganizationalAccountAccessRole**  
+1.  The result should  should display a listing of IAM roles
 
 ##### Detailed Findings
-1.  `Click` on **Inactive IAM Role** for the role **OrganizationAccountAccessRole**
-1.  Review the finding details and contextual information such as
+1.  `Click` on **OverPriviledged IAM Role** for the role 
+1.  `Review` the finding details and contextual information such as
     - Root cause of the finding.
     - The scope of the finding.
     - The potential risk it imposes on your environment.
@@ -36,11 +36,23 @@ with **Critical** severity in an AWS production environment
     - Activity Details
 
 
-1.  `Click` Role named **OrganizationAccountAccessRole**.
+##### Filter Findings by Policy
 
-1. Note the numbmer of services used and how often these services are being used.  This provides a more detailed assessment and the ability remediate granular permissions.
-
+1.  Return to list of **Findings**
+1.  `Search` for a **Policies** with the string name **malicious**
+1.  `Click` on the **Policy** filter and `Enter` the word **malicious**
+1.  `Select` all the policies
+1.  Note the listing of all findings
+1.  `Clicking` on each listing will provide details, files, and remediation recommendations.
 
 #### Validation Question
 
-1.  Enter the name of the managed policy attached to this role
+1.  `Find` and `Enter` the the name of the <u>Secret</u> access key for the user **labgoat**
+
+
+<!--
+Find a CloudFormation template that has a **secret** *access key* embedded in the CFN file.  
+
+1.  Search, in the Findings menu, for the name of the Policy with the string **secrets**
+
+-->

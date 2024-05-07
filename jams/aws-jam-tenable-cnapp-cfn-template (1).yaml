@@ -12,20 +12,20 @@ Parameters:
   Version:
     Description: Version
     Type: String
-    Default: v2
-# Username:
-#    Description:  Username for Tenable Cloud Security
-#    Type: String
-#    Default: awsjamsuser23-000@tenable.training
-#  Password:
-#    Description: Password for Tenable Cloud Securitiy
-#    Type:  String
-#    Default: B3WDauavpmw!qy8
+    Default: v3
+ Username:
+    Description:  Username for Tenable Cloud Security
+    Type: String
+    Default: awsjams-user001@cnapp.it
+  Password:
+    Description: Password for Tenable Cloud Securitiy
+    Type:  String
+    Default: B3WDauavpmw!qy8
 Resources:
   NullResource:
     Type: AWS::CloudFormation::WaitConditionHandle
 #Outputs:
-#  TenableUsername:
-#    Value:  !Ref Username
-#  TenablePassword:
-#    Value:  !Ref Password
+  TenableUsername:
+    Value:  !Ref Username
+  TenablePassword:
+    Value:  !Ref Password

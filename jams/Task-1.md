@@ -107,31 +107,41 @@ Visibility and monitoring of IAM resources one of the key steps to securing your
 1.  Each resource are links to drill down and view individual resources.  You can use the Inventory view to learn a wide variety of important things about your multi-cloud environment:
 
     1.  On the dashboard, `Click` on **IAM Resources->IAM users** to drill down and view a list of IAM users.
-    1.  `Click` on **ec2connectUser001**
+    1.  `Click` on **ohcnappgoat**
         1.  Discover granular details by walking (`clicking`) through the left menu items. 
         (See this <a href="https://docs.ermetic.com/docs/drill-down-into-resources" rel="nofollow">link</a> for detailed explanation)
 
     
     1.  `Click` on the *three dot ellipse* icon and `select` **Least Privilege Policies**
         1.    This feature is used to generate on-demand, fine-grained policies for AWS identities/resources that grant the minimum privileges needed to perform required tasks. 
+        1.   `Select` a **Time Frame** from the drop down menu.  (ie *since creation*)
+        1.  `Click` on the **Generate** button.
+    1  `Click` on **Findings** from the left-tab
+    1. `Click` on the policy **Overprivileged User**
+    1. `Select` on **Remediation**
+    1. `Hover` *mouse pointer* to the right side and `Click` on the **Diff** icon.
+        - Notice the <u>Policy</u> differences.
 
-        1.  Please note:   This step is <u>ONLY</u> used to walk through this feature, we will not generate policies.  See Generate Least Privilege Policy <a href="https://docs.ermetic.com/docs/generate-least-privilege-policies" rel="nofollow">link</a> for more details on generating a policy
+
+ <!--       1.  Please note:   This step is <u>ONLY</u> used to walk through this feature, we will not generate policies.  
+ -->
+ - See Generate Least Privilege Policy <a href="https://docs.ermetic.com/docs/generate-least-privilege-policies" rel="nofollow">reference link</a> for more details on generating a policy
 
     1.  `Return` to the dashboard.  `Click` on **Compute Resources->EC2 Instances** to show EC2 resources
     1.  `Select` the filters, **Network Exposure Scope->All IPs** and **Vulnerability Severity** and `select` Critical, High***
        (**Note**:  if filter is not displayed, `click` on the **+** button to add additional filters)
         1.  This will show critical EC2 instances with a wide-open public exposure.  
-    1.  `Click` the EC2 instance with the string containing the name <u>**aws-cloud9-Jam-IDE**</u>
+    1.  `Click` the EC2 instance with the string containing the name <u>**OHcnappPublicEC2**</u>
     1.  `Select` the **Overview** menu tab
         1.  `Search` for **Role**  
-        1.  `Click` on the policy assigned to the **Role** (<u>AWSJamsEC2OverprivilegedRole</u>)  
+        1.  `Click` on the policy assigned to the `search` for **Role**  
         1.  `Click` on **IAM->Graph** (Note:  may need to refresh and zoom in to read the output)  
             1. This step is use to see the permission mapping that exists for a given resource, and to better understand how the resource, acting as an originator or an identity, is able to assume roles and access other resources in your environment (via permissions granted in policies) (See <a href="https://docs.ermetic.com/docs/visualize-permission-mapping" rel="nofollow">link</a> for more information)
-        1.  `Click` on **Serverity->Critical**  
+        1.  `Click` on **Severity->Critical**  
            1.  **Note** the Critical severity impact of this role asssigned to this EC2 Instance.  
-  
-        1.  Go back and click on **Compute Resources->EC2 instances**.
-        1.  Select and display the Overview page for **aws-cloud9-Jam-IDE**   
+
+        1.  Go back to the **Dashboard** and `click` on **Compute Resources->EC2 instances**.
+        1.  Select and display the Overview page for **OHcnappEC2Workload01**   
     1.  `Click` on the **Findings** tab  
       1.  Note the additional policy violations found that are associated with this resource.  
     1.  `Click` on the **Network** menu - note the networking details i.e. **Security Groups and Ports**  
@@ -145,4 +155,4 @@ Visibility and monitoring of IAM resources one of the key steps to securing your
 
 #### Validation Question 
 
-1.  Enter the name of one (1) vulnerabilities found.  
+1.  What is the name of the workload has a policy  <u>**Public EC2**</u> and has <u>**EC2 instances has a suspected malicious file**</u>?
