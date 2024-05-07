@@ -5,7 +5,9 @@ yum update -y
 yum install -y git cronie jq
 
 # Define variables
+
 GITHUB_REPO_URL="https://raw.githubusercontent.com/rickdevera/oh_cnapp/main/ambassador/setup/OHcnapp-cron_script.sh"
+
 LOCAL_SCRIPT_PATH="/usr/local/bin/OHcnapp-cron_script.sh"
 
 # Download the script file from GitHub
