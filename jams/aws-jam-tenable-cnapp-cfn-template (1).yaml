@@ -16,11 +16,11 @@ Parameters:
  Username:
     Description:  Username for Tenable Cloud Security
     Type: String
-    Default: awsjams-user001@cnapp.it
+    Default: [awsjams-userXXX]
   Password:
     Description: Password for Tenable Cloud Securitiy
     Type:  String
-    Default: B3WDauavpmw!qy8
+    Default: [passwordPlaceholder]
 Resources:
   NullResource:
     Type: AWS::CloudFormation::WaitConditionHandle
